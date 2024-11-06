@@ -63,9 +63,39 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property tankBaseBlank() As System.Drawing.Bitmap
+        Friend ReadOnly Property BlankTankBase() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("tankBaseBlank", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("BlankTankBase", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property BlankTankTurret() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BlankTankTurret", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property BottomRight() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BottomRight", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property TopLeft() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TopLeft", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

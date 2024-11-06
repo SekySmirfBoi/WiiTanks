@@ -120,9 +120,11 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Assets\tankBaseBlank.png" />
+    <Content Include="Assets\Tanks\BlankTankBase.png" />
+    <Content Include="Assets\Tanks\BlankTankTurret.png" />
+    <None Include="Assets\Tanks\TopLeft.png" />
+    <None Include="Assets\Tanks\BottomRight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
