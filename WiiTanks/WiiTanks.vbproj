@@ -73,6 +73,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Game.vb" />
+    <Compile Include="Behaviour\Tanks\Bae.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GameWindow.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +119,10 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\tankBaseBlank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
