@@ -15,6 +15,7 @@
         _timer = New Timer With {.Interval = 1000 / _tickRate}
         _timer.Start()
 
+
         Dim testtank As New Bae
         _testTank = testtank
         _window.Controls.Add(_testTank)
