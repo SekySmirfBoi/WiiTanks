@@ -9,7 +9,6 @@ Public Class Bae
     Private _turretRotation As Single = 0
 
     Sub New()
-        'Me.Size = New Size(71, 81)
         Me.Size = New Size(150, 150)
         Me.Location = New Point(960, 540)
 
@@ -24,8 +23,6 @@ Public Class Bae
     End Sub
 
     Public Sub calculateTankImage(rotationAmount As Single, MouseCoords As Point)
-
-
         Dim btmp1 As New Bitmap(151, 151)
 
         Using G = Graphics.FromImage(btmp1)
