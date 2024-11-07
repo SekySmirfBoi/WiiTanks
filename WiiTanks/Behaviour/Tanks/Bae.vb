@@ -1,16 +1,35 @@
-﻿Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
+﻿Public Class Bae
 
-Public Class Bae
-    Inherits PictureBox
 
     Protected p_baseImage As Image
     Protected p_turretImage As Image
-    Private _turretRotation As Single = 0
+    Protected _turretRotation As Single = 0
+
+    Protected _image As Image
+    Protected _size As Size
+    Protected _loc As Point
+
+    Public ReadOnly Property Image As Image
+        Get
+            Return _image
+        End Get
+    End Property
+
+    Public ReadOnly Property Size As Size
+        Get
+            Return _size
+        End Get
+    End Property
+
+    Public ReadOnly Property Location As Point
+        Get
+            Return _loc
+        End Get
+    End Property
 
     Sub New()
-        Me.Size = New Size(150, 150)
-        Me.Location = New Point(960, 540)
+        _size = New Size(150, 150)
+        _loc = New Point(800, 450)
 
         p_baseImage = My.Resources.BlankTankBase
         p_turretImage = My.Resources.BlankTankTurret
@@ -23,33 +42,29 @@ Public Class Bae
     End Sub
 
     Public Sub calculateTankImage(rotationAmount As Single, MouseCoords As Point)
+        _image = calculateTurret(calculateBase(rotationAmount), MouseCoords)
+    End Sub
+
+    Private Function calculateBase(rotation As Integer)
         Dim btmp1 As New Bitmap(151, 151)
 
         Using G = Graphics.FromImage(btmp1)
             G.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
-            G.RotateTransform(rotationAmount)
+            G.RotateTransform(rotation)
             G.DrawImage(p_baseImage, New Point(-p_baseImage.Width / 2, -p_baseImage.Height / 2))
-            'G.DrawImage(p_baseImage, New Point(0, 0))
             G.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
         End Using
 
-        Dim btmp2 As New Bitmap(151, 151)
-        Using g = Graphics.FromImage(btmp2)
-            g.DrawImage(btmp1, New Point(0, 0))
+        Return btmp1
+    End Function
 
-            Dim myCentreX As Integer = btmp1.Width / 2 + Me.Location.X
-            Dim myCentreY As Integer = btmp1.Height / 2 + Me.Location.Y
-            Dim dX As Integer = MouseCoords.X - myCentreX
-            Dim dY As Integer = MouseCoords.Y - myCentreY
-            Dim angle As Decimal = Math.Atan(dX / dY) * 180 / Math.PI
+    Protected Overridable Function calculateTurret(btmp1 As Bitmap, MouseCoords As Point)
 
-            g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
-            g.RotateTransform(-angle + If(MouseCoords.Y > myCentreY, 180, 0))
-            g.DrawImage(p_turretImage, New Point(-p_turretImage.Width / 2, -p_turretImage.Height / 2 + 10))
-            g.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
-            'g.DrawImage(p_turretImage, New Point(0, 0))
-        End Using
+    End Function
 
-        Me.Image = btmp2
-    End Sub
+    Public Function getImage(MouseCoords As Point) As Image
+        calculateTankImage(0, MouseCoords)
+        Return _image
+    End Function
+
 End Class

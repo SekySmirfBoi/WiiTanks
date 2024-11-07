@@ -74,9 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\Game.vb" />
-    <Compile Include="Behaviour\Tanks\Bae.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Behaviour\GameObject.vb" />
+    <Compile Include="Behaviour\GraphicsHandler.vb" />
+    <Compile Include="Behaviour\Tanks\Bae.vb" />
+    <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="GameWindow.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -123,8 +124,13 @@
   <ItemGroup>
     <Content Include="Assets\Tanks\BlankTankBase.png" />
     <Content Include="Assets\Tanks\BlankTankTurret.png" />
+    <None Include="Assets\Tanks\BlueTankTurret.png" />
+    <None Include="Assets\Tanks\BlueTankBase.png" />
     <None Include="Assets\Tanks\TopLeft.png" />
     <None Include="Assets\Tanks\BottomRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behaviour\Tanks\Enemy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

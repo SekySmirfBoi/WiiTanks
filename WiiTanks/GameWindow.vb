@@ -1,6 +1,6 @@
 ﻿Public Class GameWindow
-
     Private _game As Game
+
 
     Private Sub GameWindow_Load(sender As Form, e As EventArgs) Handles MyBase.Load
         SetupWindow()
@@ -8,11 +8,13 @@
     End Sub
 
     Private Sub SetupWindow()
-        Me.Size = New Size(1920, 1080)
+        Me.Size = New Size(1600, 900)
         Me.MaximumSize = Me.Size
         Me.MinimumSize = Me.Size
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+
+        Me.DoubleBuffered = True
 
         Me.Text = "Wii Tonks"
         Me.BackColor = Color.Black

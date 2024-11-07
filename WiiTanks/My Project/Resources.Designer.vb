@@ -83,9 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property BottomRight() As System.Drawing.Bitmap
+        Friend ReadOnly Property BlueTankBase() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("BottomRight", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("BlueTankBase", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -93,9 +93,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property TopLeft() As System.Drawing.Bitmap
+        Friend ReadOnly Property BlueTankTurret() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("TopLeft", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("BlueTankTurret", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
