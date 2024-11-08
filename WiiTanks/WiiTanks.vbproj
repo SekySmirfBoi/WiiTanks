@@ -77,6 +77,7 @@
     <Compile Include="Behaviour\GameObject.vb" />
     <Compile Include="Behaviour\GraphicsHandler.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
+    <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="GameWindow.vb">
       <SubType>Form</SubType>

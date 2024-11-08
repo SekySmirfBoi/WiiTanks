@@ -48,7 +48,7 @@
 
     Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
         For Each pTank As Player In _playerTanks
-            pTank.Tick(_LastKnownMouseCoords, _inputKeys)
+            pTank.tick(_LastKnownMouseCoords, _inputKeys)
         Next
         _window.Invalidate()
     End Sub
