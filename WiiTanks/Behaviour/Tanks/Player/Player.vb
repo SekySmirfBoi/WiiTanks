@@ -21,7 +21,7 @@
 
             g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
             g.RotateTransform(-angle + If(MouseCoords.Y > myCentreY, 180, 0))
-            g.DrawImage(p_turretImage, New Point(-p_turretImage.Width / 2, -p_turretImage.Height / 2 + 10))
+            g.DrawImage(p_turretImage, New Point(-p_turretImage.Width / 2, -p_turretImage.Height / 2))
             g.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
         End Using
 

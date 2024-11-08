@@ -17,7 +17,7 @@
         Me.DoubleBuffered = True
 
         Me.Text = "Wii Tonks"
-        Me.BackColor = Color.Black
+        'Me.BackColor = Color.Black
     End Sub
 
     Private Sub KeyDown_Event(sender As Form, e As KeyEventArgs) Handles Me.KeyDown

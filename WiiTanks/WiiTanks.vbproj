@@ -123,8 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Tanks\BlankTankBase.png" />
-    <Content Include="Assets\Tanks\BlankTankTurret.png" />
     <None Include="Assets\Tanks\BlueTankTurret.png" />
+    <None Include="Assets\Tanks\BlankTankTurret.png" />
     <None Include="Assets\Tanks\BlueTankBase.png" />
     <None Include="Assets\Tanks\TopLeft.png" />
     <None Include="Assets\Tanks\BottomRight.png" />

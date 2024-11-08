@@ -9,6 +9,10 @@
     Private WithEvents _backImage As Image
     Private _graohics As Graphics
 
+    Private _inputFunction As New Dictionary(Of Keys, Func(Of Boolean)) ''''''''''''''''''''''''''''''''''''' WTF THIS DOESNT CAUSE AN ERROR IMMIDIETELY
+
+    Private _playerTanks() As Player
+
     Public Property BackImage As Image
         Get
             Return _backImage
@@ -25,15 +29,14 @@
     End Property
 
     Private _teswt = 0
-    Private _testTank As Bae
-    Private _test2 As Bae
+    'Private _testTank As Bae
     Sub New(window As GameWindow)
         _window = window
         _backImage = New Bitmap(_window.Width, _window.Height)
         _window.BackgroundImage = _backImage
         _graohics = Graphics.FromImage(_backImage)
 
-
+        ReDim Preserve _playerTanks(0)          ' Redim Preserve array allows for the size of the array to be altered and the contents of the array will remain
         _LastKnownMouseCoords = New Point(0, 0)
 
         _timer = New Timer With {.Interval = 1000 / _tickRate}
@@ -41,21 +44,18 @@
 
 
         Dim testtank As New Player
-        _testTank = testtank
-        Dim teste2 As New Bae
-        _test2 = teste2
+        '_testTank = testtank
+        _playerTanks(0) = testtank
     End Sub
 
     Private Sub tick(sender As Timer, e As EventArgs) Handles _timer.Tick
-        _testTank.tick(_LastKnownMouseCoords)
-        _test2.tick(_LastKnownMouseCoords)
-
+        _playerTanks(0).tick(_LastKnownMouseCoords)
         _window.Invalidate()
     End Sub
 
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
-        e.Graphics.DrawImage(_testTank.getImage(_LastKnownMouseCoords), _testTank.Location)
-        'e.Graphics.DrawImage(_test2.getImage(_LastKnownMouseCoords), _test2.Location)
+        e.Graphics.DrawImage(_playerTanks(0).getImage(), _playerTanks(0).Location)
+        e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), _playerTanks(0).CentreCood)
     End Sub
 
     Public Sub KeyDown_Event(e As KeyEventArgs)

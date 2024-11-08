@@ -8,6 +8,7 @@
     Protected _image As Image
     Protected _size As Size
     Protected _loc As Point
+    Protected _centreCoord As Point
 
     Public ReadOnly Property Image As Image
         Get
@@ -27,6 +28,12 @@
         End Get
     End Property
 
+    Public ReadOnly Property CentreCood As Point
+        Get
+            Return _centreCoord
+        End Get
+    End Property
+
     Sub New()
         _size = New Size(150, 150)
         _loc = New Point(800, 450)
@@ -39,6 +46,7 @@
 
     Public Sub tick(MouseCoords As Point)
         calculateTankImage(0, MouseCoords)
+        _centreCoord = New Point(_loc.X + _size.Width / 2, _loc.Y + _size.Height / 2)
     End Sub
 
     Public Sub calculateTankImage(rotationAmount As Single, MouseCoords As Point)
@@ -59,11 +67,19 @@
     End Function
 
     Protected Overridable Function calculateTurret(btmp1 As Bitmap, MouseCoords As Point)
+        Dim btmp2 As New Bitmap(151, 151)
 
+        Using g = Graphics.FromImage(btmp2)
+            g.DrawImage(btmp1, New Point(0, 0))
+            g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
+            g.DrawImage(p_turretImage, New Point(-p_turretImage.Width / 2, -p_turretImage.Height / 2))
+            g.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
+        End Using
+
+        Return btmp2
     End Function
 
-    Public Function getImage(MouseCoords As Point) As Image
-        calculateTankImage(0, MouseCoords)
+    Public Function getImage() As Image
         Return _image
     End Function
 
