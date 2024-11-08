@@ -13,6 +13,7 @@
         Me.MinimumSize = Me.Size
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.CenterToScreen()
 
         Me.DoubleBuffered = True
 

@@ -9,8 +9,10 @@
     Private WithEvents _backImage As Image
     Private _graohics As Graphics
 
-    Private _inputFunction As New Dictionary(Of Keys, Func(Of Boolean)) ''''''''''''''''''''''''''''''''''''' WTF THIS DOESNT CAUSE AN ERROR IMMIDIETELY
+    Private _inputPlayer As New Dictionary(Of Keys, Player)
+    Private _inputKeys() As Boolean
 
+    Private _playerTanksCount As Integer = 0
     Private _playerTanks() As Player
 
     Public Property BackImage As Image
@@ -28,49 +30,65 @@
         End Get
     End Property
 
-    Private _teswt = 0
-    'Private _testTank As Bae
     Sub New(window As GameWindow)
         _window = window
         _backImage = New Bitmap(_window.Width, _window.Height)
         _window.BackgroundImage = _backImage
         _graohics = Graphics.FromImage(_backImage)
 
-        ReDim Preserve _playerTanks(0)          ' Redim Preserve array allows for the size of the array to be altered and the contents of the array will remain
+        ReDim Preserve _inputKeys(0)
         _LastKnownMouseCoords = New Point(0, 0)
 
         _timer = New Timer With {.Interval = 1000 / _tickRate}
         _timer.Start()
 
 
-        Dim testtank As New Player
-        '_testTank = testtank
-        _playerTanks(0) = testtank
+        CreatePlayer(New Point(300, 150))
     End Sub
 
-    Private Sub tick(sender As Timer, e As EventArgs) Handles _timer.Tick
-        _playerTanks(0).tick(_LastKnownMouseCoords)
+    Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
+        For Each pTank As Player In _playerTanks
+            pTank.Tick(_LastKnownMouseCoords, _inputKeys)
+        Next
         _window.Invalidate()
     End Sub
 
+    Private Sub CreatePlayer(spawnLocation As Point)
+        Dim playerTank As New Player(spawnLocation, _tickRate)
+        ReDim Preserve _playerTanks(_playerTanksCount)
+        _playerTanks(_playerTanksCount) = playerTank
+        _playerTanksCount += 1
+
+        playerTank.AssociateKey(Keys.W, Directions.UP)
+        playerTank.AssociateKey(Keys.A, Directions.LEFT)
+        playerTank.AssociateKey(Keys.S, Directions.DOWN)
+        playerTank.AssociateKey(Keys.D, Directions.RIGHT)
+    End Sub
+
+    Private Sub AssociateKeyWithTank(key As Keys, player As Player)
+
+    End Sub
+
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
-        e.Graphics.DrawImage(_playerTanks(0).getImage(), _playerTanks(0).Location)
-        e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), _playerTanks(0).CentreCood)
+        'e.Graphics.DrawImage(_playerTanks(0).getImage(), _playerTanks(0).Location)
+        For Each pTank As Player In _playerTanks
+            e.Graphics.DrawImage(pTank.getImage(), pTank.Location)
+            e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
+        Next
     End Sub
 
     Public Sub KeyDown_Event(e As KeyEventArgs)
-        If e.KeyCode = Keys.W Then
-            _teswt = 0
-        ElseIf e.KeyCode = Keys.S Then
-            _teswt = 180
-        ElseIf e.KeyCode = Keys.A Then
-            _teswt = 270
-        ElseIf e.KeyCode = Keys.D Then
-            _teswt = 90
+        If _inputKeys.Count - 1 < e.KeyCode Then
+            ReDim Preserve _inputKeys(e.KeyCode)
         End If
+        _inputKeys(e.KeyCode) = True
     End Sub
 
     Public Sub KeyUp_Event(e As KeyEventArgs)
+        If _inputKeys.Count - 1 < e.KeyCode Then
+            ReDim Preserve _inputKeys(e.KeyCode)
+        End If
+        _inputKeys(e.KeyCode) = False
     End Sub
 
     Public Sub MouseMove_Event(e As MouseEventArgs)
