@@ -1,7 +1,7 @@
 ﻿Public Class Player
     Inherits Bae
 
-    Private _KeyDirection As New Dictionary(Of Integer, Func(Of Boolean))
+    Private _KeyDirection As New Dictionary(Of Keys, Func(Of Boolean))
 
 
     Sub New(spawnLocation As Point, tickRate As Integer)
@@ -27,15 +27,15 @@
             End If
         Next
 
-        p_baseRotation = If(p_yVel = -1 And p_xVel = -1, 225,
-                        If(p_yVel = -1 And p_xVel = 0, 180,
-                        If(p_yVel = -1 And p_xVel = 1, 135,
+        p_baseRotation = If(p_yVel = -1 And p_xVel = -1, 325,
+                        If(p_yVel = -1 And p_xVel = 0, 0,
+                        If(p_yVel = -1 And p_xVel = 1, 45,
                         If(p_yVel = 0 And p_xVel = -1, 270,
                         If(p_yVel = 0 And p_xVel = 0, p_baseRotation,
                         If(p_yVel = 0 And p_xVel = 1, 90,
-                        If(p_yVel = 1 And p_xVel = -1, 315,
-                        If(p_yVel = 1 And p_xVel = 0, 0,
-                        If(p_yVel = 1 And p_xVel = 1, 45, p_baseRotation)))))))))
+                        If(p_yVel = 1 And p_xVel = -1, 225,
+                        If(p_yVel = 1 And p_xVel = 0, 180,
+                        If(p_yVel = 1 And p_xVel = 1, 135, p_baseRotation)))))))))
     End Sub
 
     Public Sub AssociateKey(inputKey As Keys, direction() As Integer)

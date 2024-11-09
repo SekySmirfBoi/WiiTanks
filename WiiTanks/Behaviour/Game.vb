@@ -1,4 +1,6 @@
-﻿Public Class Game
+﻿Imports System.Windows.Forms.VisualStyles
+
+Public Class Game
 
     Private WithEvents _window As GameWindow
     Private WithEvents _timer As Timer
@@ -48,7 +50,7 @@
 
     Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
         For Each pTank As Player In _playerTanks
-            pTank.tick(_LastKnownMouseCoords, _inputKeys)
+            pTank.Tick(_LastKnownMouseCoords, _inputKeys)
         Next
         _window.Invalidate()
     End Sub
@@ -70,11 +72,19 @@
     End Sub
 
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
-        'e.Graphics.DrawImage(_playerTanks(0).getImage(), _playerTanks(0).Location)
+        Dim textBrush As New Pen(Color.Black, 1)
+        e.Graphics.DrawString("W:" & If(_inputKeys.Count >= Keys.W, Convert.ToString(_inputKeys(Keys.W)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 100))
+        e.Graphics.DrawString("A:" & If(_inputKeys.Count >= Keys.A, Convert.ToString(_inputKeys(Keys.A)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 150))
+        e.Graphics.DrawString("S:" & If(_inputKeys.Count >= Keys.S, Convert.ToString(_inputKeys(Keys.S)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 200))
+        e.Graphics.DrawString("D:" & If(_inputKeys.Count >= Keys.D, Convert.ToString(_inputKeys(Keys.D)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 250))
+
         For Each pTank As Player In _playerTanks
             e.Graphics.DrawImage(pTank.getImage(), pTank.Location)
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
+            e.Graphics.DrawString("p_xVel:" & pTank.p_xVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 300))
+            e.Graphics.DrawString("p_yVel:" & pTank.p_yVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 350))
         Next
+
     End Sub
 
     Public Sub KeyDown_Event(e As KeyEventArgs)

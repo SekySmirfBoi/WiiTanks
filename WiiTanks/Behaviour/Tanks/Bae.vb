@@ -15,8 +15,8 @@
     Protected p_loc As Point
     Protected p_centreCoord As Point
 
-    Protected p_xVel As Integer
-    Protected p_yVel As Integer
+    Public p_xVel As Integer
+    Public p_yVel As Integer
 
     Public ReadOnly Property Image As Image
         Get
