@@ -15,8 +15,9 @@
     Protected p_loc As Point
     Protected p_centreCoord As Point
 
-    Public p_xVel As Integer
-    Public p_yVel As Integer
+    Protected p_xVel As Integer
+    Protected p_yVel As Integer
+    Protected p_movementVelocity As Decimal
 
     Public ReadOnly Property Image As Image
         Get
@@ -42,7 +43,7 @@
         End Get
     End Property
 
-    Sub New(spawnLocation As Point, tickRate As Integer)
+    Sub New(spawnLocation As Point, tickRate As Integer, movementVelocity As Decimal)
         p_size = New Size(150, 150)
         p_loc = spawnLocation
 
@@ -50,6 +51,8 @@
         p_tickRate = tickRate
         p_turretCooldown = 1 * p_tickRate
         p_turretCooldownSeconds = 0
+
+        p_movementVelocity = movementVelocity
 
         p_baseImage = My.Resources.BlankTankBase
         p_turretImage = My.Resources.BlankTankTurret
@@ -75,6 +78,10 @@
 
     Protected Overridable Sub MoveTank()
 
+    End Sub
+
+    Protected Sub AcutallyMoveTheTank()
+        p_loc = New Point(p_loc.X + (p_xVel * p_movementVelocity * 60 / p_tickRate), p_loc.Y + (p_yVel * p_movementVelocity * 60 / p_tickRate))
     End Sub
 
 

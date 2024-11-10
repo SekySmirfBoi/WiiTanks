@@ -5,7 +5,7 @@
 
 
     Sub New(spawnLocation As Point, tickRate As Integer)
-        MyBase.New(spawnLocation, tickRate)
+        MyBase.New(spawnLocation, tickRate, 5)
         p_baseImage = My.Resources.BlueTankBase
         p_turretImage = My.Resources.BlueTankTurret
     End Sub
@@ -20,7 +20,7 @@
         p_yVel = 0
 
         For Each rank In _KeyDirection
-            If inputKeys.Count - 1 > rank.Key Then
+            If inputKeys.Count - 1 >= rank.Key Then
                 If inputKeys(rank.Key) Then
                     rank.Value.Invoke()
                 End If
@@ -36,6 +36,8 @@
                         If(p_yVel = 1 And p_xVel = -1, 225,
                         If(p_yVel = 1 And p_xVel = 0, 180,
                         If(p_yVel = 1 And p_xVel = 1, 135, p_baseRotation)))))))))
+
+        MyBase.AcutallyMoveTheTank()
     End Sub
 
     Public Sub AssociateKey(inputKey As Keys, direction() As Integer)
