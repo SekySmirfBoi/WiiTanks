@@ -8,43 +8,24 @@ Public Class Game
 
     Private _LastKnownMouseCoords As Point
 
-    Private WithEvents _backImage As Image
-    Private _graohics As Graphics
-
     Private _inputPlayer As New Dictionary(Of Keys, Player)
     Private _inputKeys() As Boolean
 
     Private _playerTanksCount As Integer = 0
     Private _playerTanks() As Player
 
-    Public Property BackImage As Image
-        Get
-            Return _backImage
-        End Get
-        Set(value As Image)
-            _backImage = value
-        End Set
-    End Property
-
-    Public ReadOnly Property Graphics As Graphics
-        Get
-            Return _graohics
-        End Get
-    End Property
 
     Sub New(window As GameWindow)
-
         setupVariables(window)
 
         CreatePlayer(New Point(300, 150))
     End Sub
 
 
+
+
     Private Sub setupVariables(window As GameWindow)
         _window = window
-        _backImage = New Bitmap(_window.Width, _window.Height)
-        _window.BackgroundImage = _backImage
-        _graohics = Graphics.FromImage(_backImage)
 
         ReDim Preserve _inputKeys(0)
         _LastKnownMouseCoords = New Point(0, 0)
@@ -53,12 +34,18 @@ Public Class Game
         _timer.Start()
     End Sub
 
+
+
+
     Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
         For Each pTank As Player In _playerTanks
             pTank.Tick(_LastKnownMouseCoords, _inputKeys)
         Next
         _window.Invalidate()
     End Sub
+
+
+
 
     Private Sub CreatePlayer(spawnLocation As Point)
         Dim playerTank As New Player(spawnLocation, _tickRate)
@@ -75,6 +62,9 @@ Public Class Game
     Private Sub AssociateKeyWithTank(key As Keys, player As Player)
         _inputPlayer.Add(key, player)
     End Sub
+
+
+
 
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
         Dim textBrush As New Pen(Color.Black, 1)
