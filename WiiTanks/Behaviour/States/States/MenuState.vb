@@ -1,6 +1,8 @@
 ﻿Public Class MenuState
     Inherits State
 
+    Private _uiManager As UIManager
+
     Public Overrides Sub Create()
         ' Backround needs making
 

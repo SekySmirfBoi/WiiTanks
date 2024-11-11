@@ -14,6 +14,7 @@ Public Class Game
     Private _playerTanksCount As Integer = 0
     Private _playerTanks() As Player
 
+    Private _stateManager As StateManager
 
     Sub New(window As GameWindow)
         setupVariables(window)
@@ -29,6 +30,8 @@ Public Class Game
 
         ReDim Preserve _inputKeys(0)
         _LastKnownMouseCoords = New Point(0, 0)
+
+        _stateManager = New StateManager(New MenuState())
 
         _timer = New Timer With {.Interval = 1000 / _tickRate}
         _timer.Start()
@@ -76,27 +79,32 @@ Public Class Game
         For Each pTank As Player In _playerTanks
             e.Graphics.DrawImage(pTank.getImage(), pTank.Location)
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
+            e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
             'e.Graphics.DrawString("p_xVel:" & pTank.p_xVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 300))
             'e.Graphics.DrawString("p_yVel:" & pTank.p_yVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 350))
         Next
 
     End Sub
 
-    Public Sub KeyDown_Event(e As KeyEventArgs)
+    Public Sub KeyDown_Event(sender As GameWindow, e As KeyEventArgs) Handles _window.KeyDown
         If _inputKeys.Count - 1 < e.KeyCode Then
             ReDim Preserve _inputKeys(e.KeyCode)
         End If
         _inputKeys(e.KeyCode) = True
     End Sub
 
-    Public Sub KeyUp_Event(e As KeyEventArgs)
+    Public Sub KeyUp_Event(sender As GameWindow, e As KeyEventArgs) Handles _window.KeyUp
         If _inputKeys.Count - 1 < e.KeyCode Then
             ReDim Preserve _inputKeys(e.KeyCode)
         End If
         _inputKeys(e.KeyCode) = False
     End Sub
 
-    Public Sub MouseMove_Event(e As MouseEventArgs)
+    Public Sub MouseMove_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.MouseMove
         _LastKnownMouseCoords = New Point(e.X, e.Y)
+    End Sub
+
+    Public Sub MouseClick_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.Click
+
     End Sub
 End Class

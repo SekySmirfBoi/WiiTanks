@@ -8,7 +8,7 @@
 
     Public Sub Render(graphics As Graphics)
         For Each curCom As UIComponent In _components
-            ' cum
+            curCom.Render(graphics)
         Next
     End Sub
 End Class

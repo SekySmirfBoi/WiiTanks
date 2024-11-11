@@ -76,9 +76,17 @@
     <Compile Include="Behaviour\Game.vb" />
     <Compile Include="Behaviour\GameObject.vb" />
     <Compile Include="Behaviour\GraphicsHandler.vb" />
+    <Compile Include="Behaviour\States\State.vb" />
+    <Compile Include="Behaviour\States\StateManager.vb" />
+    <Compile Include="Behaviour\States\States\MenuState.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
+    <Compile Include="Behaviour\Tanks\Collision.vb" />
     <Compile Include="Behaviour\Tanks\Directions.vb" />
+    <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
+    <Compile Include="Behaviour\UI\Components\Button.vb" />
+    <Compile Include="Behaviour\UI\UIComponent.vb" />
+    <Compile Include="Behaviour\UI\UIManager.vb" />
     <Compile Include="GameWindow.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -128,8 +136,6 @@
     <None Include="Assets\Tanks\BlankTankTurret.png" />
     <None Include="Assets\Tanks\BlueTankBase.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviour\Tanks\Enemy\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
