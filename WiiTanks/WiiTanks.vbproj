@@ -80,7 +80,9 @@
     <Compile Include="Behaviour\States\StateManager.vb" />
     <Compile Include="Behaviour\States\States\MenuState.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
-    <Compile Include="Behaviour\Tanks\Collision.vb" />
+    <Compile Include="Behaviour\Tanks\Collision\Box.vb" />
+    <Compile Include="Behaviour\Tanks\Collision\Collision.vb" />
+    <Compile Include="Behaviour\Tanks\Collision\Line.vb" />
     <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />

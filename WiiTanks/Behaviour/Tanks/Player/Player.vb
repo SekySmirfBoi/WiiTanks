@@ -61,7 +61,12 @@
             Dim myCentreY As Integer = btmp1.Height / 2 + p_loc.Y
             Dim dX As Integer = MouseCoords.X - myCentreX
             Dim dY As Integer = MouseCoords.Y - myCentreY
-            Dim angle As Decimal = Math.Atan(dX / dY) * 180 / Math.PI
+            Dim angle As Decimal
+            If dY <> 0 Then
+                angle = Math.Atan(dX / dY) * 180 / Math.PI
+            Else
+                angle = If(dX = 0, 0, If(dX > 0, 90, 270))
+            End If
 
             g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
             g.RotateTransform(-angle + If(MouseCoords.Y > myCentreY, 180, 0))

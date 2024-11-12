@@ -1,4 +1,4 @@
-﻿Public Class Collision
+﻿Public MustInherit Class Collision
 
     Private _StartPoint As Point
     Private _EndPoint As Point
@@ -24,4 +24,6 @@
         _StartPoint = newStartPoint
         _EndPoint = newEndPoint
     End Sub
+
+    Public MustOverride Sub CheckOverlap(Collision As Collision)
 End Class

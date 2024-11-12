@@ -19,6 +19,8 @@
     Protected p_yVel As Integer
     Protected p_movementVelocity As Decimal
 
+    Private _collision As Box
+
     Public ReadOnly Property Image As Image
         Get
             Return p_image
@@ -43,9 +45,16 @@
         End Get
     End Property
 
+    Public ReadOnly Property Collision As Box
+        Get
+            Return _collision
+        End Get
+    End Property
+
     Sub New(spawnLocation As Point, tickRate As Integer, movementVelocity As Decimal)
         p_size = New Size(150, 150)
         p_loc = spawnLocation
+        p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
 
         p_ticksAlive = 0
         p_tickRate = tickRate
@@ -56,6 +65,10 @@
 
         p_baseImage = My.Resources.BlankTankBase
         p_turretImage = My.Resources.BlankTankTurret
+
+        _collision = New Box(p_centreCoord - New Point(p_size.Width / 4, p_size.Height / 4), p_centreCoord + New Point(p_size.Width / 4, p_size.Height / 4))
+
+
 
         CalculateTankImage(New Point(0, 0))
     End Sub
@@ -82,6 +95,8 @@
 
     Protected Sub AcutallyMoveTheTank()
         p_loc = New Point(p_loc.X + (p_xVel * p_movementVelocity * 60 / p_tickRate), p_loc.Y + (p_yVel * p_movementVelocity * 60 / p_tickRate))
+        p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
+        _collision.updateCollision(p_centreCoord - New Point(p_size.Width / 4, p_size.Height / 4), p_centreCoord + New Point(p_size.Width / 4, p_size.Height / 4))
     End Sub
 
 

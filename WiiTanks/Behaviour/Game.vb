@@ -80,8 +80,7 @@ Public Class Game
             e.Graphics.DrawImage(pTank.getImage(), pTank.Location)
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
             e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
-            'e.Graphics.DrawString("p_xVel:" & pTank.p_xVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 300))
-            'e.Graphics.DrawString("p_yVel:" & pTank.p_yVel, New Font("Arial", 13), textBrush.Brush, New Point(500, 350))
+            e.Graphics.DrawRectangle(New Pen(Color.Pink, 3), New Rectangle(pTank.Collision.StartPoint.X, pTank.Collision.StartPoint.Y, pTank.Collision.EndPoint.X - pTank.Collision.StartPoint.X, pTank.Collision.EndPoint.Y - pTank.Collision.StartPoint.Y))
         Next
 
     End Sub
