@@ -25,5 +25,5 @@
         _EndPoint = newEndPoint
     End Sub
 
-    Public MustOverride Sub CheckOverlap(Collision As Collision)
+    Public MustOverride Function CheckOverlap(Collision As Collision)
 End Class

@@ -5,7 +5,7 @@
         MyBase.New(startPoint, endPoint)
     End Sub
 
-    Public Overrides Sub CheckOverlap(Collision As Collision)
+    Public Overrides Function CheckOverlap(Collision As Collision)
         Throw New NotImplementedException()
-    End Sub
+    End Function
 End Class
