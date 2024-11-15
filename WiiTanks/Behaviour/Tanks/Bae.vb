@@ -19,8 +19,6 @@
     Protected p_yVel As Integer
     Protected p_movementVelocity As Decimal
 
-    Private _collision As Box
-
     Public ReadOnly Property Image As Image
         Get
             Return p_image
@@ -45,12 +43,6 @@
         End Get
     End Property
 
-    Public ReadOnly Property Collision As Box
-        Get
-            Return _collision
-        End Get
-    End Property
-
     Sub New(spawnLocation As Point, tickRate As Integer, movementVelocity As Decimal)
         p_size = New Size(150, 150)
         p_loc = spawnLocation
@@ -66,16 +58,8 @@
         p_baseImage = My.Resources.BlankTankBase
         p_turretImage = My.Resources.BlankTankTurret
 
-        _collision = New Box(p_centreCoord - New Point(p_size.Width / 4, p_size.Height / 4), p_centreCoord + New Point(p_size.Width / 4, p_size.Height / 4))
-
-
 
         CalculateTankImage(New Point(0, 0))
-    End Sub
-
-    Public Sub Tick(MouseCoords As Point)
-        CalculateTankImage(MouseCoords)
-        p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
     End Sub
 
     Public Overridable Sub Tick()
@@ -85,18 +69,31 @@
         End If
     End Sub
 
-    Protected Overridable Sub MoveTank(inputKeys() As Boolean)
+    Protected Overridable Sub MovePlayerTank(inputKeys() As Boolean, walls() As BasicWall)
 
     End Sub
 
-    Protected Overridable Sub MoveTank()
+    Protected Overridable Sub MoveEnemyTank(walls() As BasicWall)
 
     End Sub
 
-    Protected Sub AcutallyMoveTheTank()
-        p_loc = New Point(p_loc.X + (p_xVel * p_movementVelocity * 60 / p_tickRate), p_loc.Y + (p_yVel * p_movementVelocity * 60 / p_tickRate))
+    Protected Sub AcutallyMoveTheTank(walls() As BasicWall)
+        Dim xDisplacement As Integer = p_xVel * p_movementVelocity * 60 / p_tickRate
+        Dim yDisplacement As Integer = p_yVel * p_movementVelocity * 60 / p_tickRate
+        Dim canMoveInX As Boolean = True
+        Dim canMoveInY As Boolean = True
+
+        For Each wall As BasicWall In walls
+            If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(xDisplacement, 0), wall.rect) Then
+                canMoveInX = False
+            End If
+            If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(0, yDisplacement), wall.rect) Then
+                canMoveInY = False
+            End If
+        Next
+
+        p_loc = New Point(p_loc.X + If(canMoveInX, xDisplacement, 0), p_loc.Y + If(canMoveInY, yDisplacement, 0))
         p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
-        _collision.updateCollision(p_centreCoord - New Point(p_size.Width / 4, p_size.Height / 4), p_centreCoord + New Point(p_size.Width / 4, p_size.Height / 4))
     End Sub
 
 
@@ -130,7 +127,8 @@
         Return btmp2
     End Function
 
-    Public Function getImage() As Image
+    Public Function getImage(MouseCoords As Point) As Image
+        CalculateTankImage(MouseCoords)
         Return p_image
     End Function
 

@@ -73,20 +73,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Collision.vb" />
     <Compile Include="Behaviour\Game.vb" />
     <Compile Include="Behaviour\GameObject.vb" />
     <Compile Include="Behaviour\GraphicsHandler.vb" />
+    <Compile Include="Behaviour\Objects\Walls\BasicWall.vb" />
+    <Compile Include="Behaviour\Objects\Walls\DestroyableWall.vb" />
     <Compile Include="Behaviour\States\State.vb" />
     <Compile Include="Behaviour\States\StateManager.vb" />
     <Compile Include="Behaviour\States\States\MenuState.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
     <Compile Include="Behaviour\Tanks\Collision\Box.vb" />
-    <Compile Include="Behaviour\Tanks\Collision\Collision.vb" />
-    <Compile Include="Behaviour\Tanks\Collision\Line.vb" />
+    <Compile Include="Behaviour\Tanks\Collision\CollisionOld.vb" />
     <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
+    <Compile Include="Behaviour\UI\Components\TextBlock.vb" />
     <Compile Include="Behaviour\UI\UIComponent.vb" />
     <Compile Include="Behaviour\UI\UIManager.vb" />
     <Compile Include="GameWindow.vb">
@@ -134,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Tanks\BlankTankBase.png" />
+    <Content Include="drawioFiles\exist.txt" />
+    <None Include="Assets\Walls\DestroyableWall.png" />
+    <None Include="Assets\Walls\BasicWall.png" />
     <None Include="Assets\Tanks\BlueTankTurret.png" />
     <None Include="Assets\Tanks\BlankTankTurret.png" />
     <None Include="Assets\Tanks\BlueTankBase.png" />

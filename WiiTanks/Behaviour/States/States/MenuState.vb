@@ -12,10 +12,14 @@
     End Sub
 
     Public Overrides Sub Tick()
-        Throw New NotImplementedException()
+
     End Sub
 
-    Public Overrides Sub Render()
+    Public Overrides Sub Render(graphics As Graphics)
+
+    End Sub
+
+    Public Overrides Sub Click(MouseCoords As Point)
         Throw New NotImplementedException()
     End Sub
 End Class

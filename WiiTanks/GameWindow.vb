@@ -8,7 +8,7 @@
     End Sub
 
     Private Sub SetupWindow()
-        Me.Size = New Size(1600, 900)
+        Me.Size = New Size(1400, 980)
         Me.MaximumSize = Me.Size
         Me.MinimumSize = Me.Size
         Me.MaximizeBox = False

@@ -13,13 +13,18 @@ Public Class Game
 
     Private _playerTanksCount As Integer = 0
     Private _playerTanks() As Player
+    Private _wallCount As Integer = 0
+    Private _walls() As BasicWall
 
     Private _stateManager As StateManager
 
     Sub New(window As GameWindow)
+        ' each level will be in a grid 20 wide 15 high
+        ' each tile 70 x 70 pixles
         setupVariables(window)
 
         CreatePlayer(New Point(300, 150))
+        CreateWall(New Point(500, 600))
     End Sub
 
 
@@ -42,8 +47,9 @@ Public Class Game
 
     Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
         For Each pTank As Player In _playerTanks
-            pTank.Tick(_LastKnownMouseCoords, _inputKeys)
+            pTank.Tick(_inputKeys, _walls)
         Next
+        _stateManager.Tick()
         _window.Invalidate()
     End Sub
 
@@ -61,6 +67,12 @@ Public Class Game
         playerTank.AssociateKey(Keys.S, Directions.DOWN)
         playerTank.AssociateKey(Keys.D, Directions.RIGHT)
     End Sub
+    Private Sub CreateWall(Location As Point)
+        Dim wall As New BasicWall(Location, New Size(70, 70))
+        ReDim Preserve _walls(_wallCount)
+        _walls(_wallCount) = wall
+        _wallCount += 1
+    End Sub
 
     Private Sub AssociateKeyWithTank(key As Keys, player As Player)
         _inputPlayer.Add(key, player)
@@ -77,12 +89,18 @@ Public Class Game
         'e.Graphics.DrawString("D:" & If(_inputKeys.Count >= Keys.D, Convert.ToString(_inputKeys(Keys.D)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 250))
 
         For Each pTank As Player In _playerTanks
-            e.Graphics.DrawImage(pTank.getImage(), pTank.Location)
+            e.Graphics.DrawImage(pTank.getImage(_LastKnownMouseCoords), pTank.Location)
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
             e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
-            e.Graphics.DrawRectangle(New Pen(Color.Pink, 3), New Rectangle(pTank.Collision.StartPoint.X, pTank.Collision.StartPoint.Y, pTank.Collision.EndPoint.X - pTank.Collision.StartPoint.X, pTank.Collision.EndPoint.Y - pTank.Collision.StartPoint.Y))
+            e.Graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
         Next
 
+        For Each wall As BasicWall In _walls
+            e.Graphics.DrawImage(wall.Image, wall.Location)
+            e.Graphics.DrawRectangle(New Pen(Color.Red, 3), wall.rect)
+        Next
+
+        _stateManager.Render(e.Graphics)
     End Sub
 
     Public Sub KeyDown_Event(sender As GameWindow, e As KeyEventArgs) Handles _window.KeyDown

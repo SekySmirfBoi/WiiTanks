@@ -1,12 +1,12 @@
 ﻿Public Class Box
-    Inherits Collision
+    Inherits CollisionOld
 
 
     Sub New(startPoint As Point, endPoint As Point)
         MyBase.New(startPoint, endPoint)
     End Sub
 
-    Public Overrides Function CheckOverlap(Collision As Collision)
+    Public Overrides Function CheckOverlap(Collision As CollisionOld)
         Dim bottomLeft As New Point(StartPoint.X, EndPoint.Y)
         Dim topRight As New Point(EndPoint.X, StartPoint.Y)
         Dim otherBottomLeft As New Point(Collision.StartPoint.X, Collision.EndPoint.Y)

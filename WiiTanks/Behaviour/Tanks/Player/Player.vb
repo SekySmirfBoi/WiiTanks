@@ -10,12 +10,13 @@
         p_turretImage = My.Resources.BlueTankTurret
     End Sub
 
-    Public Overloads Sub Tick(MouseCoords As Point, inputKeys() As Boolean)
-        MoveTank(inputKeys)
-        MyBase.Tick(MouseCoords)
+    Public Overloads Sub Tick(inputKeys() As Boolean, walls() As BasicWall)
+        MyBase.Tick()
+        MovePlayerTank(inputKeys, walls)
+        p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
     End Sub
 
-    Protected Overrides Sub MoveTank(inputKeys() As Boolean)
+    Protected Overrides Sub MovePlayerTank(inputKeys() As Boolean, walls() As BasicWall)
         p_xVel = 0
         p_yVel = 0
 
@@ -37,7 +38,7 @@
                         If(p_yVel = 1 And p_xVel = 0, 180,
                         If(p_yVel = 1 And p_xVel = 1, 135, p_baseRotation)))))))))
 
-        MyBase.AcutallyMoveTheTank()
+        MyBase.AcutallyMoveTheTank(walls)
     End Sub
 
     Public Sub AssociateKey(inputKey As Keys, direction() As Integer)
