@@ -19,6 +19,8 @@
     Protected p_yVel As Integer
     Protected p_movementVelocity As Decimal
 
+    Protected p_collisionBox As Rectangle
+
     Public ReadOnly Property Image As Image
         Get
             Return p_image
@@ -40,6 +42,12 @@
     Public ReadOnly Property CentreCood As Point
         Get
             Return p_centreCoord
+        End Get
+    End Property
+
+    Public ReadOnly Property collBox As Rectangle
+        Get
+            Return New Rectangle(CentreCood - New Point(20, 20), New Size(40, 40))
         End Get
     End Property
 
@@ -84,10 +92,23 @@
         Dim canMoveInY As Boolean = True
 
         For Each wall As BasicWall In walls
-            If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(xDisplacement, 0), wall.rect) Then
+            'If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(xDisplacement, 0), wall.rect) Then
+            '    canMoveInX = False
+            'End If
+            'If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(0, yDisplacement), wall.rect) Then
+            '    canMoveInY = False
+            'End If
+
+            Dim rectXOffsetted As Rectangle = collBox
+            Dim rectYOffsetted As Rectangle = collBox
+
+            rectXOffsetted.X = rectXOffsetted.X + xDisplacement
+            rectYOffsetted.Y = rectYOffsetted.Y + yDisplacement
+
+            If Collision.CheckRectangleCollision(rectXOffsetted, wall.rect) Then
                 canMoveInX = False
             End If
-            If Collision.CheckPointAgainstRectangle(p_centreCoord + New Point(0, yDisplacement), wall.rect) Then
+            If Collision.CheckRectangleCollision(rectYOffsetted, wall.rect) Then
                 canMoveInY = False
             End If
         Next

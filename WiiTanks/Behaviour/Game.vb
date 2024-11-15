@@ -93,6 +93,7 @@ Public Class Game
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
             e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
             e.Graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
+            e.Graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
         Next
 
         For Each wall As BasicWall In _walls
