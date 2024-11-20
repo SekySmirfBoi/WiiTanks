@@ -74,6 +74,13 @@ Public Class Game
         _wallCount += 1
     End Sub
 
+    Private Sub CreateDestroyableWall(Location As Point)
+        Dim wall As New DestroyableWall(Location, New Size(70, 70))
+        ReDim Preserve _walls(_wallCount)
+        _walls(_wallCount) = wall
+        _wallCount += 1
+    End Sub
+
     Private Sub AssociateKeyWithTank(key As Keys, player As Player)
         _inputPlayer.Add(key, player)
     End Sub
@@ -93,6 +100,7 @@ Public Class Game
             e.Graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
             e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
             e.Graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
+
             e.Graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
         Next
 
@@ -100,6 +108,7 @@ Public Class Game
             e.Graphics.DrawImage(wall.Image, wall.Location)
             e.Graphics.DrawRectangle(New Pen(Color.Red, 3), wall.rect)
         Next
+
 
         _stateManager.Render(e.Graphics)
     End Sub
@@ -123,6 +132,6 @@ Public Class Game
     End Sub
 
     Public Sub MouseClick_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.Click
-
+        _stateManager.Click(_LastKnownMouseCoords)
     End Sub
 End Class

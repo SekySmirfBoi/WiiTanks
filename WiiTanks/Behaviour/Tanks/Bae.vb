@@ -86,8 +86,8 @@
     End Sub
 
     Protected Sub AcutallyMoveTheTank(walls() As BasicWall)
-        Dim xDisplacement As Integer = p_xVel * p_movementVelocity * 60 / p_tickRate
-        Dim yDisplacement As Integer = p_yVel * p_movementVelocity * 60 / p_tickRate
+        Dim xDisplacement As Integer = p_xVel * If(p_xVel <> 0 And p_yVel <> 0, p_movementVelocity / Math.Sqrt(2), p_movementVelocity) * 60 / p_tickRate
+        Dim yDisplacement As Integer = p_yVel * If(p_xVel <> 0 And p_yVel <> 0, p_movementVelocity / Math.Sqrt(2), p_movementVelocity) * 60 / p_tickRate
         Dim canMoveInX As Boolean = True
         Dim canMoveInY As Boolean = True
 

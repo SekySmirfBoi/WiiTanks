@@ -4,6 +4,7 @@
 
     Sub New(StartStart As State)
         _CurrentState = StartStart
+        _CurrentState.Create()
     End Sub
 
     Public Sub Tick()

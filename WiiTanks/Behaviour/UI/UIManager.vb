@@ -11,4 +11,10 @@
             curCom.Render(graphics)
         Next
     End Sub
+
+    Public Sub Click(MouseCoords As Point)
+        For Each com As UIComponent In _components
+            com.Click(MouseCoords)
+        Next
+    End Sub
 End Class
