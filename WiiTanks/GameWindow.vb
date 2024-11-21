@@ -8,7 +8,7 @@
     End Sub
 
     Private Sub SetupWindow()
-        Me.Size = New Size(1400, 980)
+        Me.Size = SharedResources.WindowSize
         Me.MaximumSize = Me.Size
         Me.MinimumSize = Me.Size
         Me.MaximizeBox = False
@@ -18,6 +18,5 @@
         Me.DoubleBuffered = True
 
         Me.Text = "Wii Tonks"
-        'Me.BackColor = Color.Black
     End Sub
 End Class

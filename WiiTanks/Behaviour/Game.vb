@@ -101,7 +101,11 @@ Public Class Game
             e.Graphics.DrawLine(New Pen(Color.Lime, 3), _LastKnownMouseCoords, pTank.CentreCood)
             e.Graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
 
-            e.Graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
+            If _inputKeys.Length - 1 >= Keys.P Then
+                If _inputKeys(Keys.P) Then
+                    e.Graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
+                End If
+            End If
         Next
 
         For Each wall As BasicWall In _walls
