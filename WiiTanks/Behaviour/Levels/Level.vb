@@ -1,4 +1,4 @@
 ﻿Public MustInherit Class Level
 
-    Public MustOverride Sub Create(uimanager As UIManager)
+    Public MustOverride Sub Create(gameMap(,) As String)
 End Class

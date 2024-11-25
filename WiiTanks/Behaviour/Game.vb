@@ -89,11 +89,11 @@ Public Class Game
 
 
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
-        Dim textBrush As New Pen(Color.Black, 1)
         'e.Graphics.DrawString("W:" & If(_inputKeys.Count >= Keys.W, Convert.ToString(_inputKeys(Keys.W)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 100))
         'e.Graphics.DrawString("A:" & If(_inputKeys.Count >= Keys.A, Convert.ToString(_inputKeys(Keys.A)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 150))
         'e.Graphics.DrawString("S:" & If(_inputKeys.Count >= Keys.S, Convert.ToString(_inputKeys(Keys.S)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 200))
         'e.Graphics.DrawString("D:" & If(_inputKeys.Count >= Keys.D, Convert.ToString(_inputKeys(Keys.D)), "False"), New Font("Arial", 13), textBrush.Brush, New Point(500, 250))
+        'e.Graphics.DrawString("Count:" & _inputKeys.Count - 1, New Font("Arial", 13), textBrush.Brush, New Point(500, 250))
 
         For Each pTank As Player In _playerTanks
             e.Graphics.DrawImage(pTank.getImage(_LastKnownMouseCoords), pTank.Location)

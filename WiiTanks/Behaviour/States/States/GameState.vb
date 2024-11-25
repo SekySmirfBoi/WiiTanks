@@ -4,14 +4,13 @@
     Private _level As Level
     Private _uiManager As UIManager
 
-    Sub New(Level As Level)
+    Sub New(Level As Integer)
         _uiManager = New UIManager
-        _level = Level
         _level.Create(_uiManager)
     End Sub
 
-    Public Overrides Sub Create()
-        Throw New NotImplementedException()
+    Public Overrides Sub Create(parent As StateManager)
+        p_father = parent
     End Sub
 
     Public Overrides Sub Tick()

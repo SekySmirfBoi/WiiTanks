@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Behaviour\Collision.vb" />
     <Compile Include="Behaviour\Game.vb" />
+    <Compile Include="Behaviour\GameMapTiles.vb" />
     <Compile Include="Behaviour\GameObject.vb" />
     <Compile Include="Behaviour\GraphicsHandler.vb" />
     <Compile Include="Behaviour\Levels\Level.vb" />
@@ -85,7 +86,9 @@
     <Compile Include="Behaviour\States\State.vb" />
     <Compile Include="Behaviour\States\StateManager.vb" />
     <Compile Include="Behaviour\States\States\GameState.vb" />
+    <Compile Include="Behaviour\States\States\LevelSelectState.vb" />
     <Compile Include="Behaviour\States\States\MenuState.vb" />
+    <Compile Include="Behaviour\States\States\SettingsState.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
     <Compile Include="Behaviour\Tanks\Collision\Box.vb" />
     <Compile Include="Behaviour\Tanks\Collision\CollisionOld.vb" />
