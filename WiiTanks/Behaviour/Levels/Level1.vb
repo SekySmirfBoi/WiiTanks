@@ -1,7 +1,10 @@
 ﻿Public Class Level1
     Inherits Level
-    Public Overrides Sub Create(gameMap(,) As String)
-        ReDim gameMap(20, 15)
-        gameMap(5, 5) = GameMapTiles.PLAYER_SPAWN
-    End Sub
+    Public Overrides Function Create()
+        Dim gameMap(20, 15) As String
+        gameMap(10, 10) = GameMapTiles.PLAYER_SPAWN
+
+        gameMap(2, 2) = GameMapTiles.BROWN_SPAWN
+        Return gameMap
+    End Function
 End Class

@@ -1,4 +1,4 @@
 ﻿Public MustInherit Class Level
 
-    Public MustOverride Sub Create(gameMap(,) As String)
+    Public MustOverride Function Create()
 End Class

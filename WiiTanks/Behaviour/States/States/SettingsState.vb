@@ -24,7 +24,7 @@
         p_uiManager.Render(graphics)
     End Sub
 
-    Public Overrides Sub Click(MouseCoords As Point)
-        p_uiManager.Click(MouseCoords)
+    Public Overrides Sub Click()
+        p_uiManager.Click()
     End Sub
 End Class

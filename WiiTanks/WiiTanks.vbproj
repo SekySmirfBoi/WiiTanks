@@ -23,7 +23,9 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>WiiTanks.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +35,9 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>WiiTanks.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -93,6 +97,9 @@
     <Compile Include="Behaviour\Tanks\Collision\Box.vb" />
     <Compile Include="Behaviour\Tanks\Collision\CollisionOld.vb" />
     <Compile Include="Behaviour\Tanks\Directions.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\AI\BaseAI.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\AI\BorwnAI.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\Brown.vb" />
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
@@ -144,6 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Tanks\BlankTankBase.png" />
+    <None Include="Assets\Tanks\BrownTankBase.png" />
+    <None Include="Assets\Tanks\BrownTankTurret.png" />
     <Content Include="drawioFiles\exist.txt" />
     <None Include="Assets\Walls\DestroyableWall.png" />
     <None Include="Assets\Walls\BasicWall.png" />

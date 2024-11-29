@@ -12,9 +12,9 @@
         Next
     End Sub
 
-    Public Sub Click(MouseCoords As Point)
+    Public Sub Click()
         For Each com As UIComponent In _components
-            com.Click(MouseCoords)
+            com.Click(SharedResources.LastKnownMouseCoords)
         Next
     End Sub
 End Class

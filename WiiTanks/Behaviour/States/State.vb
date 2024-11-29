@@ -5,5 +5,5 @@
     Public MustOverride Sub Create(parent As StateManager)
     Public MustOverride Sub Tick()
     Public MustOverride Sub Render(graphics As Graphics)
-    Public MustOverride Sub Click(MouseCoords As Point)
+    Public MustOverride Sub Click()
 End Class

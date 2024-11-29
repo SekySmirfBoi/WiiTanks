@@ -1,7 +1,6 @@
 ﻿Public Class StateManager
 
     Private _CurrentState As State
-
     Sub New(StartStart As State)
         _CurrentState = StartStart
         _CurrentState.Create(Me)
@@ -20,7 +19,7 @@
         _CurrentState.Create(Me)
     End Sub
 
-    Public Sub Click(MouseCoord As Point)
-        _CurrentState.Click(MouseCoord)
+    Public Sub Click()
+        _CurrentState.Click()
     End Sub
 End Class
