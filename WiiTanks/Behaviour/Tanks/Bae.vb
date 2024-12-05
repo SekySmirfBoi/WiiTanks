@@ -8,6 +8,7 @@
     Protected p_ticksAlive As Integer
     Protected p_turretCooldown As Integer
     Protected p_turretCooldownSeconds As Decimal
+    Private _projectileType As BasicProjectile
 
     Protected p_image As Image
     Protected p_size As Size
@@ -20,8 +21,32 @@
 
     Protected p_collisionBox As Rectangle
 
+    Public p_AI As BaseAI
+
+    Public ReadOnly Property xVel As Integer
+        Get
+            Return p_xVel
+        End Get
+    End Property
+
+    Public ReadOnly Property yVel As Integer
+        Get
+            Return p_yVel
+        End Get
+    End Property
+
+    Public Property BaseRotiation As Integer
+        Get
+            Return p_baseRotation
+        End Get
+        Set(value As Integer)
+            p_baseRotation = value
+        End Set
+    End Property
+
     Public ReadOnly Property Image As Image
         Get
+            p_image = p_AI.calculateImage()
             Return p_image
         End Get
     End Property
@@ -62,10 +87,9 @@
         End Get
     End Property
 
-    Sub New(spawnLocation As Point, movementVelocity As Decimal)
+    Sub New(spawnLocation As Point, movementVelocity As Decimal, AI As BaseAI)
         p_size = New Size(150, 150)
         p_loc = spawnLocation
-        'p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
         p_centreCoord = New Point(spawnLocation.X + SharedResources.TileSize.Width / 2, spawnLocation.Y + SharedResources.TileSize.Height / 2)
         p_loc = New Point(p_centreCoord.X - p_size.Width / 2, p_centreCoord.Y - p_size.Height / 2)
 
@@ -77,6 +101,9 @@
 
         p_baseImage = My.Resources.BlankTankBase
         p_turretImage = My.Resources.BlankTankTurret
+
+        p_AI = AI
+        p_AI.assignCreature(Me)
     End Sub
 
     Public Overridable Sub Tick()
@@ -84,6 +111,7 @@
         If p_turretCooldown < 0 Then
             p_turretCooldown = 0
         End If
+        p_AI.Tick()
     End Sub
 
     Protected Overridable Sub MovePlayerTank()
@@ -119,40 +147,16 @@
         p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
     End Sub
 
-
-    Public Sub CalculateTankImage()
-        p_image = calculateTurret(calculateBase())
-    End Sub
-
-    Private Function calculateBase()
-        Dim btmp1 As New Bitmap(151, 151)
-
-        Using G = Graphics.FromImage(btmp1)
-            G.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
-            G.RotateTransform(p_baseRotation)
-            G.DrawImage(p_baseImage, New Point(-p_baseImage.Width / 2, -p_baseImage.Height / 2))
-            G.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
-        End Using
-
-        Return btmp1
-    End Function
-
-    Protected Overridable Function calculateTurret(btmp1 As Bitmap)
-        Dim btmp2 As New Bitmap(151, 151)
-
-        Using g = Graphics.FromImage(btmp2)
-            g.DrawImage(btmp1, New Point(0, 0))
-            g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
-            g.DrawImage(p_turretImage, New Point(-p_turretImage.Width / 2, -p_turretImage.Height / 2))
-            g.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
-        End Using
-
-        Return btmp2
-    End Function
-
-    Public Function getImage() As Image
-        CalculateTankImage()
-        Return p_image
-    End Function
-
+    'Public Function calculateBase() As Image
+    '    Dim btmp1 As New Bitmap(151, 151)
+    '
+    '    Using G = Graphics.FromImage(btmp1)
+    '        G.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
+    '        G.RotateTransform(p_baseRotation)
+    '        G.DrawImage(p_baseImage, New Point(-p_baseImage.Width / 2, -p_baseImage.Height / 2))
+    '        G.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
+    '    End Using
+    '
+    '    Return btmp1
+    'End Function
 End Class

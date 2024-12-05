@@ -99,9 +99,11 @@
     <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BaseAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BorwnAI.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\AI\PlayerAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\Brown.vb" />
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
+    <Compile Include="Behaviour\Tanks\Projectiles\BasicProjectile.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
     <Compile Include="Behaviour\UI\Components\TextBlock.vb" />
     <Compile Include="Behaviour\UI\UIComponent.vb" />

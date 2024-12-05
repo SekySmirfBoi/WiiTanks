@@ -2,7 +2,7 @@
     Inherits Bae
 
     Sub New(spawnLocation As Point)
-        MyBase.New(spawnLocation, 0)
+        MyBase.New(spawnLocation, 0, New BorwnAI)
         p_baseImage = My.Resources.BrownTankBase
         p_turretImage = My.Resources.BrownTankTurret
     End Sub
@@ -16,10 +16,11 @@
     End Sub
 
     Protected Overrides Sub MoveEnemyTank()
-        MyBase.MoveEnemyTank()
+
     End Sub
 
-    Protected Overrides Function calculateTurret(btmp1 As Bitmap) As Object
+
+    Protected Function calculate2Turret(btmp1 As Bitmap) As Object
         Dim btmp2 As New Bitmap(151, 151)
 
         Using g = Graphics.FromImage(btmp2)
@@ -33,10 +34,10 @@
                 dx = SharedResources.playerTanks(0).CentreCood.X - myCentreX
                 dy = SharedResources.playerTanks(0).CentreCood.Y - myCentreY
                 Dim angle As Decimal
-                If dY <> 0 Then
-                    angle = Math.Atan(dX / dY) * 180 / Math.PI
+                If dy <> 0 Then
+                    angle = Math.Atan(dx / dy) * 180 / Math.PI
                 Else
-                    angle = If(dX = 0, 0, If(dX > 0, 90, 270))
+                    angle = If(dx = 0, 0, If(dx > 0, 90, 270))
                 End If
 
                 g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)

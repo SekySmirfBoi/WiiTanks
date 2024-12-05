@@ -146,9 +146,7 @@
 
     Public Overrides Sub Render(graphics As Graphics)
         For Each pTank As Player In SharedResources.playerTanks
-            graphics.DrawImage(pTank.getImage(), pTank.Location)
-            'graphics.DrawLine(New Pen(Color.Red, 3), New Point(0, 0), pTank.CentreCood)
-            'graphics.DrawLine(New Pen(Color.Lime, 3), SharedResources.LastKnownMouseCoords, pTank.CentreCood)
+            graphics.DrawImage(pTank.Image, pTank.Location)
             graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
 
             If SharedResources.inputKeys.Length - 1 >= Keys.P Then
@@ -159,18 +157,36 @@
         Next
 
         For Each eTank As Bae In _enemyTanks
-            graphics.DrawImage(eTank.getImage(), eTank.Location)
+            graphics.DrawImage(eTank.Image(), eTank.Location)
+
+            For i As Integer = 0 To 1
+                Dim x1 As Integer = eTank.CentreCood.X
+                Dim y1 As Integer = eTank.CentreCood.Y
+
+                Dim theta As Integer = If(i = 0, eTank.p_AI.p_turretAngle, eTank.p_AI.p_target)
+                Dim phi As Integer = (180 - theta) / 2
+
+                Dim thetaRad As Decimal = theta * (Math.PI / 180)
+                Dim phiRad As Decimal = phi * (Math.PI / 180)
+
+                Dim a As Decimal = Math.Sqrt(20000 - 20000 * Math.Cos(thetaRad))
+                Dim o As Decimal = a * Math.Sin((Math.PI / 2) - phiRad)
+                Dim n As Decimal = a * Math.Cos((Math.PI / 2) - phiRad)
+
+
+                graphics.DrawLine(New Pen(Color.Red, 2), eTank.CentreCood, New Point(x1 + n, y1 - 100 + o))
+            Next
         Next
 
-        For Each wall As BasicWall In SharedResources.walls
+            For Each wall As BasicWall In SharedResources.walls
             graphics.DrawImage(wall.Image, wall.Location)
         Next
 
-        For i As Integer = 0 To SharedResources.MapSize.Width
-            For j As Integer = 0 To SharedResources.MapSize.Height
-                graphics.DrawRectangle(New Pen(Color.Green), New Rectangle(New Point((i + 1) * SharedResources.TileSize.Width, (j + 1) * SharedResources.TileSize.Height), SharedResources.TileSize))
-            Next
-        Next
+        'For i As Integer = 0 To SharedResources.MapSize.Width
+        '    For j As Integer = 0 To SharedResources.MapSize.Height
+        '        graphics.DrawRectangle(New Pen(Color.Green), New Rectangle(New Point((i + 1) * SharedResources.TileSize.Width, (j + 1) * SharedResources.TileSize.Height), SharedResources.TileSize))
+        '    Next
+        'Next
     End Sub
 
     Public Overrides Sub Click()
