@@ -1,6 +1,10 @@
 ﻿Public Class PlayerAI
     Inherits BaseAI
 
+    Sub New()
+        MyBase.New(0)
+    End Sub
+
     Public Overrides Sub Tick()
     End Sub
 

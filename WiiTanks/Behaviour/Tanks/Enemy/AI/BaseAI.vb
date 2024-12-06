@@ -2,10 +2,14 @@
     Protected p_hose As Bae
     Protected p_mineCooldown As Integer
 
-    Public p_target As Decimal = 0
-    Public p_turretAngle As Decimal = 0
-    Protected p_turretTurnSpeed As Decimal = 2
+    Public p_target As Integer = 0
+    Public p_turretAngle As Integer = 0
+    Protected p_turretTurnSpeed As Integer = 0
+    Protected p_turretTurnCooldown As Integer = 0
 
+    Sub New(turretVelocity As Integer)
+        p_turretTurnSpeed = turretVelocity
+    End Sub
     Public Sub assignCreature(Creature As Bae)
         p_hose = Creature
     End Sub
@@ -50,34 +54,36 @@
     End Function
 
     Protected Sub changeTurretAngle()
-        If If(p_turretAngle > p_target, p_turretAngle - p_target, p_target - p_turretAngle) < p_turretTurnSpeed Then
-            p_turretAngle = p_target
-        Else
-            If p_target <= 180 And p_turretAngle <= 180 Then
-                p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
-            ElseIf p_target <= 180 And p_turretAngle >= 180 Then
-                If p_turretAngle - p_target > 180 Then
-                    p_turretAngle += p_turretTurnSpeed
-                Else
-                    p_turretAngle -= p_turretTurnSpeed
+        If p_turretTurnCooldown <= 0 Then
+            If If(p_turretAngle > p_target, p_turretAngle - p_target, p_target - p_turretAngle) < p_turretTurnSpeed Then
+                p_turretAngle = p_target
+            Else
+                If p_target <= 180 And p_turretAngle <= 180 Then
+                    p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
+                ElseIf p_target <= 180 And p_turretAngle >= 180 Then
+                    If p_turretAngle - p_target > 180 Then
+                        p_turretAngle += p_turretTurnSpeed
+                    Else
+                        p_turretAngle -= p_turretTurnSpeed
+                    End If
+                ElseIf p_target >= 180 And p_turretAngle <= 180 Then
+                    If p_target - p_turretAngle > 180 Then
+                        p_turretAngle -= p_turretTurnSpeed
+                    Else
+                        p_turretAngle += p_turretTurnSpeed
+                    End If
+                ElseIf p_target >= 180 And p_turretAngle >= 180 Then
+                    p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
                 End If
-            ElseIf p_target >= 180 And p_turretAngle <= 180 Then
-                If p_target - p_turretAngle > 180 Then
-                    p_turretAngle -= p_turretTurnSpeed
-                Else
-                    p_turretAngle += p_turretTurnSpeed
-                End If
-            ElseIf p_target >= 180 And p_turretAngle >= 180 Then
-                p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
             End If
-        End If
 
 
-        If p_turretAngle > 360 Then
-            p_turretAngle = 0
-        End If
-        If p_turretAngle < 0 Then
-            p_turretAngle = 360 - p_turretTurnSpeed
+            If p_turretAngle > 360 Then
+                p_turretAngle = 0
+            End If
+            If p_turretAngle < 0 Then
+                p_turretAngle = 360 - p_turretTurnSpeed
+            End If
         End If
     End Sub
 

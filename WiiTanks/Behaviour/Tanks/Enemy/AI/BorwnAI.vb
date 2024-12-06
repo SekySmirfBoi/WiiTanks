@@ -1,10 +1,15 @@
 ﻿Public Class BorwnAI
     Inherits BaseAI
 
+    Sub New(turretVelocity)
+        MyBase.New(turretVelocity)
+    End Sub
+
     Public Overrides Sub Tick()
+        p_turretTurnCooldown -= 1
         If p_turretAngle = p_target Then
-            Dim rng As New Random
-            p_target = rng.Next(0, 360)
+            p_target = SharedResources.RNG.Next(0, 360)
+            p_turretTurnCooldown = 30
         End If
 
         changeTurretAngle()

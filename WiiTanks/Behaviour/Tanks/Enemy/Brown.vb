@@ -2,7 +2,7 @@
     Inherits Bae
 
     Sub New(spawnLocation As Point)
-        MyBase.New(spawnLocation, 0, New BorwnAI)
+        MyBase.New(spawnLocation, 0, New BorwnAI(2))
         p_baseImage = My.Resources.BrownTankBase
         p_turretImage = My.Resources.BrownTankTurret
     End Sub

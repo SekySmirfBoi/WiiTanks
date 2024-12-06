@@ -1,5 +1,6 @@
 ﻿Public Class SharedResources
     Public Shared TickRate As Integer = 60
+    Public Shared RNG As New Random
     Public Shared TileSize As Size = New Size(55, 55)
     Public Shared MapSize As Size = New Size(20, 15)
     Public Shared WindowSize As Size = New Size(TileSize.Width * (MapSize.Width + 2) + 16, TileSize.Height * (MapSize.Height + 2) + 39)
