@@ -160,6 +160,9 @@
                     graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
                 End If
             End If
+
+            'graphics.DrawString("X:" & pTank.Location.X, SharedResources.DEFAULT_FONT, SharedResources.TextBrush.Brush, New Point(800, 200))
+            'graphics.DrawString("Y:" & pTank.Location.Y, SharedResources.DEFAULT_FONT, SharedResources.TextBrush.Brush, New Point(800, 250))
         Next
 
         If SharedResources.enemyTanksCount > 0 Then
