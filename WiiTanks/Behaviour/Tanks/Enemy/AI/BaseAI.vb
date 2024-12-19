@@ -4,17 +4,37 @@
 
     Public p_target As Integer = 0
     Public p_turretAngle As Integer = 0
+
     Protected p_turretTurnSpeed As Integer = 0
     Protected p_turretTurnCooldown As Integer = 0
 
-    Sub New(turretVelocity As Integer)
+    Protected p_tankFlurryMax As Integer
+    Protected p_tankProjLefs As Integer
+
+    Private _timeSinceLastShot As Integer = 0
+
+    Sub New(turretVelocity As Integer, maxFLurry As Integer)
         p_turretTurnSpeed = turretVelocity
+        p_tankFlurryMax = maxFLurry
+        p_turretTurnCooldown = 30
+        _timeSinceLastShot = 0
     End Sub
     Public Sub assignCreature(Creature As Bae)
         p_hose = Creature
     End Sub
 
-    Public MustOverride Sub Tick()
+    Public Overridable Sub Tick()
+        p_turretTurnCooldown -= 1
+        _timeSinceLastShot += 1
+
+        If p_turretTurnCooldown = 0 Then
+            If p_tankProjLefs < p_tankFlurryMax Then
+                p_tankProjLefs += 1
+            End If
+            p_turretTurnCooldown = 30
+        End If
+    End Sub
+
 
     Private Function calculateBase()
 
@@ -54,7 +74,7 @@
     End Function
 
     Protected Sub changeTurretAngle()
-        If p_turretTurnCooldown <= 0 Then
+        If _timeSinceLastShot >= 5 Then
             If If(p_turretAngle > p_target, p_turretAngle - p_target, p_target - p_turretAngle) < p_turretTurnSpeed Then
                 p_turretAngle = p_target
             Else
@@ -82,12 +102,23 @@
                 p_turretAngle = 0
             End If
             If p_turretAngle < 0 Then
-                p_turretAngle = 360 - p_turretTurnSpeed
+                p_turretAngle = 360 + p_turretAngle
             End If
         End If
     End Sub
 
-
+    Public Sub Shoot()
+        ' turret is 76 pixels long
+        If p_tankProjLefs > 0 Then
+            Dim xDisplace As Decimal = 76 * Math.Cos((Math.PI / 180) * (p_turretAngle - 90))
+            Dim yDisplace As Decimal = 76 * Math.Sin((Math.PI / 180) * (p_turretAngle - 90))
+            Dim spawnCoord As Point = New Point(p_hose.CentreCood.X + xDisplace, p_hose.CentreCood.Y + yDisplace)
+            SharedResources.CreateProjectile(spawnCoord, p_turretAngle, p_hose.ProjType)
+            p_turretTurnCooldown = 30
+            p_tankProjLefs -= 1
+            _timeSinceLastShot = 0
+        End If
+    End Sub
     Public Function calculateImage()
         Return calculateTurret(calculateBase())
     End Function

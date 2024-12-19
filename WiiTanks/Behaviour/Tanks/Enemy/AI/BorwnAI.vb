@@ -2,14 +2,14 @@
     Inherits BaseAI
 
     Sub New(turretVelocity)
-        MyBase.New(turretVelocity)
+        MyBase.New(turretVelocity, 1)
     End Sub
 
     Public Overrides Sub Tick()
-        p_turretTurnCooldown -= 1
+        MyBase.Tick()
         If p_turretAngle = p_target Then
             p_target = SharedResources.RNG.Next(0, 360)
-            p_turretTurnCooldown = 30
+            Shoot()
         End If
 
         changeTurretAngle()
@@ -22,8 +22,8 @@
             g.DrawImage(btmp1, New Point(0, 0))
 
             If SharedResources.finishedLoadingMap Then
-                g.DrawString(p_target, New Font("Ariel", 13), SharedResources.TextBrush.Brush, New Point(0, 0))
-                g.DrawString(p_turretAngle, New Font("Ariel", 13), SharedResources.TextBrush.Brush, New Point(0, 50))
+                'g.DrawString(p_target, New Font("Ariel", 13), SharedResources.TextBrush.Brush, New Point(0, 0))
+                'g.DrawString(p_turretAngle, New Font("Ariel", 13), SharedResources.TextBrush.Brush, New Point(0, 50))
 
                 g.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
                 g.RotateTransform(p_turretAngle)

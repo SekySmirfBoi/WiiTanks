@@ -6,8 +6,6 @@
     Private _uiManager As UIManager
     Private _gameMap(,) As String
 
-    Private _playerTanksCount As Integer = 0
-    Private _enemyTanksCount As Integer = 0
     Private _enemyTanks() As Bae
 
     Private _wallCount As Integer = 0
@@ -19,9 +17,9 @@
 
     Private Sub CreatePlayer(spawnLocation As Point)
         Dim playerTank As New Player(spawnLocation)
-        ReDim Preserve SharedResources.Playertanks(_playerTanksCount)
-        SharedResources.playerTanks(_playerTanksCount) = playerTank
-        _playerTanksCount += 1
+        ReDim Preserve SharedResources.playerTanks(SharedResources.playerTanksCount)
+        SharedResources.playerTanks(SharedResources.playerTanksCount) = playerTank
+        SharedResources.playerTanksCount += 1
 
         playerTank.AssociateKey(Keys.W, Directions.UP)
         playerTank.AssociateKey(Keys.A, Directions.LEFT)
@@ -39,9 +37,9 @@
                 enemytank = New Player(location)
         End Select
 
-        ReDim Preserve _enemyTanks(_enemyTanksCount)
-        _enemyTanks(_enemyTanksCount) = enemytank
-        _enemyTanksCount += 1
+        ReDim Preserve _enemyTanks(SharedResources.enemyTanksCount)
+        _enemyTanks(SharedResources.enemyTanksCount) = enemytank
+        SharedResources.enemyTanksCount += 1
     End Sub
 
     Private Sub CreateWall(Location As Point)
@@ -133,9 +131,17 @@
             pTank.Tick()
         Next
 
-        For Each eTank As Bae In _enemyTanks
-            eTank.Tick()
-        Next
+        If SharedResources.enemyTanksCount > 0 Then
+            For Each eTank As Bae In _enemyTanks
+                eTank.Tick()
+            Next
+        End If
+
+        If SharedResources.projectileCount > 0 Then
+            For Each proj As BasicProjectile In SharedResources.projectiles
+                proj.Tick()
+            Next
+        End If
 
         If SharedResources.inputKeys.Count - 1 >= Keys.Escape Then
             If SharedResources.inputKeys(Keys.Escape) Then
@@ -156,29 +162,39 @@
             End If
         Next
 
-        For Each eTank As Bae In _enemyTanks
-            graphics.DrawImage(eTank.Image(), eTank.Location)
+        If SharedResources.enemyTanksCount > 0 Then
+            For Each eTank As Bae In _enemyTanks
+                graphics.DrawImage(eTank.Image(), eTank.Location)
 
-            For i As Integer = 0 To 1
-                Dim x1 As Integer = eTank.CentreCood.X
-                Dim y1 As Integer = eTank.CentreCood.Y
+                For i As Integer = 0 To 1
+                    Dim lenght As Integer = 100
 
-                Dim theta As Integer = If(i = 0, eTank.p_AI.p_turretAngle, eTank.p_AI.p_target)
-                Dim phi As Integer = (180 - theta) / 2
+                    Dim x1 As Integer = eTank.CentreCood.X
+                    Dim y1 As Integer = eTank.CentreCood.Y
 
-                Dim thetaRad As Decimal = theta * (Math.PI / 180)
-                Dim phiRad As Decimal = phi * (Math.PI / 180)
+                    Dim theta As Integer = If(i = 0, eTank.p_AI.p_turretAngle, eTank.p_AI.p_target)
+                    Dim phi As Integer = (180 - theta) / 2
 
-                Dim a As Decimal = Math.Sqrt(20000 - 20000 * Math.Cos(thetaRad))
-                Dim o As Decimal = a * Math.Sin((Math.PI / 2) - phiRad)
-                Dim n As Decimal = a * Math.Cos((Math.PI / 2) - phiRad)
+                    Dim thetaRad As Decimal = theta * (Math.PI / 180)
+                    Dim phiRad As Decimal = phi * (Math.PI / 180)
+
+                    Dim a As Decimal = Math.Sqrt((2 * lenght ^ 2) - (2 * lenght ^ 2) * Math.Cos(thetaRad))
+                    Dim o As Decimal = a * Math.Sin((Math.PI / 2) - phiRad)
+                    Dim n As Decimal = a * Math.Cos((Math.PI / 2) - phiRad)
 
 
-                graphics.DrawLine(New Pen(Color.Red, 2), eTank.CentreCood, New Point(x1 + n, y1 - 100 + o))
+                    'graphics.DrawLine(New Pen(Color.Red, 2), eTank.CentreCood, New Point(x1 + n, y1 - lenght + o))
+                Next
             Next
-        Next
+        End If
 
-            For Each wall As BasicWall In SharedResources.walls
+        If SharedResources.projectileCount > 0 Then
+            For Each proj As BasicProjectile In SharedResources.projectiles
+                graphics.DrawImage(proj.Image, proj.Location)
+            Next
+        End If
+
+        For Each wall As BasicWall In SharedResources.walls
             graphics.DrawImage(wall.Image, wall.Location)
         Next
 
@@ -190,5 +206,8 @@
     End Sub
 
     Public Overrides Sub Click()
+        If SharedResources.finishedLoadingMap Then
+            SharedResources.playerTanks(0).Shoot()
+        End If
     End Sub
 End Class

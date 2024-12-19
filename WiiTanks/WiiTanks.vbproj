@@ -104,6 +104,7 @@
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="Behaviour\Tanks\Projectiles\BasicProjectile.vb" />
+    <Compile Include="Behaviour\Tanks\Projectiles\ProjectileTypes.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
     <Compile Include="Behaviour\UI\Components\TextBlock.vb" />
     <Compile Include="Behaviour\UI\UIComponent.vb" />
@@ -152,6 +153,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Projectiles\BasicProjectile.png" />
     <Content Include="Assets\Tanks\BlankTankBase.png" />
     <None Include="Assets\Tanks\BrownTankBase.png" />
     <None Include="Assets\Tanks\BrownTankTurret.png" />

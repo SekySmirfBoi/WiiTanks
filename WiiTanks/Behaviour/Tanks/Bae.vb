@@ -8,7 +8,7 @@
     Protected p_ticksAlive As Integer
     Protected p_turretCooldown As Integer
     Protected p_turretCooldownSeconds As Decimal
-    Private _projectileType As BasicProjectile
+    Private _projectileType As String
 
     Protected p_image As Image
     Protected p_size As Size
@@ -22,6 +22,12 @@
     Protected p_collisionBox As Rectangle
 
     Public p_AI As BaseAI
+
+    Public ReadOnly Property ProjType As String
+        Get
+            Return _projectileType
+        End Get
+    End Property
 
     Public ReadOnly Property xVel As Integer
         Get
@@ -87,7 +93,7 @@
         End Get
     End Property
 
-    Sub New(spawnLocation As Point, movementVelocity As Decimal, AI As BaseAI)
+    Sub New(spawnLocation As Point, movementVelocity As Decimal, AI As BaseAI, projType As String)
         p_size = New Size(150, 150)
         p_loc = spawnLocation
         p_centreCoord = New Point(spawnLocation.X + SharedResources.TileSize.Width / 2, spawnLocation.Y + SharedResources.TileSize.Height / 2)
@@ -104,6 +110,8 @@
 
         p_AI = AI
         p_AI.assignCreature(Me)
+
+        _projectileType = projType
     End Sub
 
     Public Overridable Sub Tick()
@@ -146,17 +154,4 @@
         p_loc = New Point(p_loc.X + If(canMoveInX, xDisplacement, 0), p_loc.Y + If(canMoveInY, yDisplacement, 0))
         p_centreCoord = New Point(p_loc.X + p_size.Width / 2, p_loc.Y + p_size.Height / 2)
     End Sub
-
-    'Public Function calculateBase() As Image
-    '    Dim btmp1 As New Bitmap(151, 151)
-    '
-    '    Using G = Graphics.FromImage(btmp1)
-    '        G.TranslateTransform(btmp1.Width / 2, btmp1.Height / 2)
-    '        G.RotateTransform(p_baseRotation)
-    '        G.DrawImage(p_baseImage, New Point(-p_baseImage.Width / 2, -p_baseImage.Height / 2))
-    '        G.TranslateTransform(-btmp1.Width / 2, -btmp1.Height / 2)
-    '    End Using
-    '
-    '    Return btmp1
-    'End Function
 End Class

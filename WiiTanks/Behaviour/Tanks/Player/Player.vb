@@ -5,7 +5,7 @@
     Private _MineCooldown As Integer = 0
 
     Sub New(spawnLocation As Point)
-        MyBase.New(spawnLocation, 5, New PlayerAI)
+        MyBase.New(spawnLocation, 5, New PlayerAI, ProjectileTypes.BASIC)
         p_baseImage = My.Resources.BlueTankBase
         p_turretImage = My.Resources.BlueTankTurret
         _MineCooldown = SharedResources.TickRate
@@ -46,5 +46,9 @@
 
     Public Sub DisassociateKey(inputKey As Keys)
         _KeyDirection.Remove(inputKey)
+    End Sub
+
+    Public Sub Shoot()
+        p_AI.Shoot()
     End Sub
 End Class
