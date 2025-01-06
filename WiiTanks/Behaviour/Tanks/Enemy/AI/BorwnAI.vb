@@ -9,9 +9,10 @@
         MyBase.Tick()
         If p_turretAngle = p_target Then
             p_target = SharedResources.RNG.Next(0, 360)
-            Shoot()
+            If SharedResources.projectileCount < 4 Then
+                Shoot()
+            End If
         End If
-
         changeTurretAngle()
     End Sub
 

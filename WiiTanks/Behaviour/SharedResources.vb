@@ -28,12 +28,26 @@
     Public Shared Sub CreateProjectile(Location As Point, angle As Integer, type As String)
         Dim proj As BasicProjectile
         If type = ProjectileTypes.BASIC Then
-            proj = New BasicProjectile(angle, Location, Math.Sqrt(18))
+            proj = New BasicProjectile(angle, Location, 2 * Math.Sqrt(18), 2)
         Else
-            proj = New BasicProjectile(angle, Location, Math.Sqrt(18))
+            proj = New BasicProjectile(angle, Location, Math.Sqrt(18), 2)
         End If
         ReDim Preserve projectiles(projectileCount)
         projectiles(projectileCount) = proj
         projectileCount += 1
+    End Sub
+
+    Public Shared Sub DestroyProjectile(proj As BasicProjectile)
+        Dim amountToSfit As Integer = 0
+
+        projectileCount -= 1
+
+        For i As Integer = 0 To projectileCount
+            If Not projectiles(i).Equals(proj) Then
+                projectiles(i - amountToSfit) = projectiles(i)
+            Else
+                amountToSfit += 1
+            End If
+        Next
     End Sub
 End Class

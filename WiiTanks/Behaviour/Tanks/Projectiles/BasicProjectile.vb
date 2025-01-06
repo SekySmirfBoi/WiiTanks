@@ -1,10 +1,11 @@
-﻿Imports System.Net
-
-Public Class BasicProjectile
+﻿Public Class BasicProjectile
     Protected p_velX As Integer
     Protected p_velY As Integer
     Private _speed As Decimal
     Protected p_angle As Integer
+
+    Private _bounceBuffer As Integer = 0
+    Private _bouncesLeft As Integer
 
     Protected p_loc As Point
     Protected p_centreCoords As Point
@@ -31,7 +32,7 @@ Public Class BasicProjectile
         End Get
     End Property
 
-    Sub New(angle As Integer, centreloc As Point, speed As Decimal)
+    Sub New(angle As Integer, centreloc As Point, speed As Decimal, bouncesLeft As Integer)
         _image = My.Resources.BasicProjectile
 
         p_centreCoords = centreloc
@@ -39,23 +40,70 @@ Public Class BasicProjectile
 
         p_angle = angle
         _speed = speed
-        'p_loc = Loc()
+
+        _bouncesLeft = bouncesLeft
 
 
         CalculateVelocities()
     End Sub
 
     Public Sub Tick()
+        _bounceBuffer -= 1
+
         Dim xDisplacement As Integer = p_velX * If(p_velX <> 0 And p_velY <> 0, _speed / Math.Sqrt(2), _speed) * 60 / SharedResources.TickRate
         Dim yDisplacement As Integer = p_velY * If(p_velX <> 0 And p_velY <> 0, _speed / Math.Sqrt(2), _speed) * 60 / SharedResources.TickRate
 
+        Dim newLoc As Point = New Point(p_loc.X + p_velX, p_loc.Y + p_velY)
+        Dim newCentre As Point = newLoc + New Point(_image.Height / 2, _image.Width / 2)
+
         For Each wall As BasicWall In SharedResources.walls
 
+            If Collision.CheckCircleInRect(newCentre, 5, wall.rect) Then
+                Dim TopLeft As Point = New Point(wall.rect.Location.X, wall.rect.Location.Y)
+                Dim TopRight As Point = New Point(wall.rect.Location.X + wall.rect.Width, wall.rect.Location.Y)
+                Dim BottomLeft As Point = New Point(wall.rect.Location.X, wall.rect.Location.Y + wall.rect.Height)
+                Dim BottomRight As Point = New Point(wall.rect.Location.X + wall.rect.Width, wall.rect.Location.Y + wall.rect.Height)
+
+                Dim disTL As Decimal = Math.Sqrt((newCentre.X - TopLeft.X) ^ 2 + (newCentre.Y - TopLeft.Y) ^ 2)
+                Dim disTR As Decimal = Math.Sqrt((newCentre.X - TopRight.X) ^ 2 + (newCentre.Y - TopRight.Y) ^ 2)
+                Dim disBL As Decimal = Math.Sqrt((newCentre.X - BottomLeft.X) ^ 2 + (newCentre.Y - BottomLeft.Y) ^ 2)
+                Dim disBR As Decimal = Math.Sqrt((newCentre.X - BottomRight.X) ^ 2 + (newCentre.Y - BottomRight.Y) ^ 2)
+
+                If Not (disTL = disBR And disTR = disBL) Then
+                    If disTL < disBR Then
+                        If disTR < disBL Then
+                            ' Hit top wall
+                            p_angle = 540 - p_angle
+                        Else
+                            ' Hit left wall
+                            p_angle = 360 - p_angle
+                        End If
+                    ElseIf disBR < disTL Then
+                        If disTR < disBL Then
+                            ' Hit right wall
+                            p_angle = 360 - p_angle
+                        Else
+                            ' Hit bottom wall
+                            p_angle = 540 - p_angle
+                        End If
+                    End If
+                End If
+
+                If _bounceBuffer <= 0 Then
+                    _bouncesLeft -= 1
+                    _bounceBuffer = SharedResources.TickRate / 5
+                End If
+
+                If _bouncesLeft < 0 Then
+                    SharedResources.DestroyProjectile(Me)
+                End If
+            End If
         Next
 
         CalculateVelocities()
 
         p_loc = New Point(p_loc.X + p_velX, p_loc.Y + p_velY)
+        p_centreCoords = p_loc + New Point(_image.Height / 2, _image.Width / 2)
     End Sub
 
     Protected Sub CalculateVelocities()
