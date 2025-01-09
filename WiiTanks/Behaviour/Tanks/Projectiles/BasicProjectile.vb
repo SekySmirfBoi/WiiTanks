@@ -56,9 +56,11 @@
         Dim newLoc As Point = New Point(p_loc.X + p_velX, p_loc.Y + p_velY)
         Dim newCentre As Point = newLoc + New Point(_image.Height / 2, _image.Width / 2)
 
+        Dim colliSionPoint As New Point(newCentre.X + _speed * Math.Cos((Math.PI / 180) * (p_angle - 90)), newCentre.Y + _speed * Math.Sin((Math.PI / 180) * (p_angle - 90)))
+
         For Each wall As BasicWall In SharedResources.walls
 
-            If Collision.CheckCircleInRect(newCentre, 5, wall.rect) Then
+            If Collision.CheckPointAgainstRectangle(colliSionPoint, wall.rect) Then
                 Dim TopLeft As Point = New Point(wall.rect.Location.X, wall.rect.Location.Y)
                 Dim TopRight As Point = New Point(wall.rect.Location.X + wall.rect.Width, wall.rect.Location.Y)
                 Dim BottomLeft As Point = New Point(wall.rect.Location.X, wall.rect.Location.Y + wall.rect.Height)
@@ -91,7 +93,7 @@
 
                 If _bounceBuffer <= 0 Then
                     _bouncesLeft -= 1
-                    _bounceBuffer = SharedResources.TickRate / 5
+                    _bounceBuffer = SharedResources.TickRate / 10
                 End If
 
                 If _bouncesLeft < 0 Then
@@ -100,10 +102,35 @@
             End If
         Next
 
+        If SharedResources.playerTanksCount > 0 Then
+            For Each player As Player In SharedResources.playerTanks
+                If Collision.CheckPointAgainstRectangle(colliSionPoint, player.collBox) Then
+                    SharedResources.killPlayer(player)
+                    SharedResources.DestroyProjectile(Me)
+                End If
+            Next
+        End If
+
+        If SharedResources.enemyTanksCount > 0 Then
+            For Each enemy As Bae In SharedResources.enemyTanks
+                If Collision.CheckPointAgainstRectangle(colliSionPoint, enemy.collBox) Then
+                    SharedResources.killEnemt(enemy)
+                    SharedResources.DestroyProjectile(Me)
+                End If
+            Next
+        End If
+
         CalculateVelocities()
 
         p_loc = New Point(p_loc.X + p_velX, p_loc.Y + p_velY)
         p_centreCoords = p_loc + New Point(_image.Height / 2, _image.Width / 2)
+
+        If p_loc.X > SharedResources.WindowSize.Width Or
+           p_loc.X < 0 Or
+           p_loc.Y > SharedResources.WindowSize.Height Or
+           p_loc.Y < 0 Then
+            SharedResources.DestroyProjectile(Me)
+        End If
     End Sub
 
     Protected Sub CalculateVelocities()

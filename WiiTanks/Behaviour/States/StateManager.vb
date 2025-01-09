@@ -3,7 +3,7 @@
     Private _CurrentState As State
     Sub New(StartStart As State)
         _CurrentState = StartStart
-        _CurrentState.Create(Me)
+        _CurrentState.Create()
     End Sub
 
     Public Sub Tick()
@@ -16,7 +16,7 @@
 
     Public Sub ChangeState(newState As State)
         _CurrentState = newState
-        _CurrentState.Create(Me)
+        _CurrentState.Create()
     End Sub
 
     Public Sub Click()

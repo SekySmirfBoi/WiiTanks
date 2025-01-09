@@ -1,8 +1,7 @@
 ﻿Public Class MenuState
     Inherits State
 
-    Public Overrides Sub Create(parent As StateManager)
-        p_father = parent
+    Public Overrides Sub Create()
 
         ' Backround needs making
 
@@ -13,11 +12,11 @@
         p_uiManager.AddComponent(New TextBlock(New Point(SharedResources.CentreWindowCoord.X - 30, 100), "title", SharedResources.BlankImage, SharedResources.DEFAULT_FONT))
         p_uiManager.AddComponent(New Button(New Point(SharedResources.CentreWindowCoord.X - 60, 150), "Start", SharedResources.BtnSize,
                                            Function() As Boolean
-                                               p_father.ChangeState(New LevelSelectState())
+                                               SharedResources.stateManager.ChangeState(New LevelSelectState())
                                            End Function))
         p_uiManager.AddComponent(New Button(New Point(SharedResources.CentreWindowCoord.X - 60, 200), "Settings", SharedResources.BtnSize,
                                            Function() As Boolean
-                                               p_father.ChangeState(New SettingsState())
+                                               SharedResources.stateManager.ChangeState(New SettingsState())
                                            End Function))
     End Sub
 

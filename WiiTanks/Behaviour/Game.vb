@@ -12,10 +12,8 @@ Public Class Game
     Private _wallCount As Integer = 0
     Private _walls() As BasicWall
 
-    Private _stateManager As StateManager
-
     Sub New(window As GameWindow)
-        _stateManager = New StateManager(New GameState(1))
+        SharedResources.stateManager = New StateManager(New GameState(1))
         setupVariables(window)
     End Sub
 
@@ -37,12 +35,12 @@ Public Class Game
 
 
     Private Sub Tick(sender As Timer, e As EventArgs) Handles _timer.Tick
-        _stateManager.Tick()
+        SharedResources.stateManager.Tick()
         _window.Invalidate()
     End Sub
 
     Private Sub paint_event(sender As GameWindow, e As PaintEventArgs) Handles _window.Paint
-        _stateManager.Render(e.Graphics)
+        SharedResources.stateManager.Render(e.Graphics)
     End Sub
 
     Public Sub KeyDown_Event(sender As GameWindow, e As KeyEventArgs) Handles _window.KeyDown
@@ -64,6 +62,6 @@ Public Class Game
     End Sub
 
     Public Sub MouseClick_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.Click
-        _stateManager.Click()
+        SharedResources.stateManager.Click()
     End Sub
 End Class

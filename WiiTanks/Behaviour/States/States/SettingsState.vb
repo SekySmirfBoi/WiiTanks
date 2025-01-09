@@ -1,7 +1,6 @@
 ﻿Public Class SettingsState
     Inherits State
-    Public Overrides Sub Create(parent As StateManager)
-        p_father = parent
+    Public Overrides Sub Create()
         p_uiManager = New UIManager()
 
 
@@ -12,7 +11,7 @@
                                             End Function))
         p_uiManager.AddComponent(New Button(New Point(SharedResources.CentreWindowCoord.X - 60, 20), "Back", SharedResources.BtnSize,
                                             Function() As Boolean
-                                                p_father.ChangeState(New MenuState())
+                                                SharedResources.stateManager.ChangeState(New MenuState())
                                             End Function))
     End Sub
 

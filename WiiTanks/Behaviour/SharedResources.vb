@@ -18,12 +18,14 @@
     Public Shared walls() As BasicWall
     Public Shared playerTanks() As Player
     Public Shared projectiles() As BasicProjectile
+    Public Shared enemyTanks() As Bae
     Public Shared playerTanksCount As Integer = 0
     Public Shared projectileCount As Integer = 0
     Public Shared enemyTanksCount As Integer = 0
 
     Public Shared finishedLoadingMap As Boolean = False
 
+    Public Shared stateManager As StateManager
 
     Public Shared Sub CreateProjectile(Location As Point, angle As Integer, type As String)
         Dim proj As BasicProjectile
@@ -49,5 +51,51 @@
                 amountToSfit += 1
             End If
         Next
+
+        If projectileCount > 0 Then
+            ReDim Preserve projectiles(projectileCount - 1)
+        Else
+            ReDim projectiles(0)
+        End If
+    End Sub
+
+    Public Shared Sub killPlayer(player As Player)
+        Dim amountToSfit As Integer = 0
+
+        playerTanksCount -= 1
+
+        For i As Integer = 0 To playerTanksCount
+            If Not playerTanks(i).Equals(player) Then
+                playerTanks(i - amountToSfit) = playerTanks(i)
+            Else
+                amountToSfit += 1
+            End If
+        Next
+
+        If playerTanksCount > 0 Then
+            ReDim Preserve playerTanks(playerTanksCount - 1)
+        Else
+            ReDim playerTanks(0)
+        End If
+    End Sub
+
+    Public Shared Sub killEnemt(enemebr As Bae)
+        Dim amountToSfit As Integer = 0
+
+        enemyTanksCount -= 1
+
+        For i As Integer = 0 To enemyTanksCount
+            If Not enemyTanks(i).Equals(enemebr) Then
+                enemyTanks(i - amountToSfit) = enemyTanks(i)
+            Else
+                amountToSfit += 1
+            End If
+        Next
+
+        If enemyTanksCount > 0 Then
+            ReDim Preserve enemyTanks(enemyTanksCount - 1)
+        Else
+            ReDim enemyTanks(0)
+        End If
     End Sub
 End Class
