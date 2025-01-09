@@ -13,7 +13,7 @@
 
                 Dim tempInt As Integer = x + y * 8 + 1
                 p_uiManager.AddComponent(New Button(New Point(x * 130 + 100, y * 130 + 100), tempInt,
-                                                    New Size(SharedResources.BtnSize.Width, SharedResources.BtnSize.Width),
+                                                    New Size(120, 120),
                                                     Function() As Boolean
                                                         SharedResources.stateManager.ChangeState(New GameState(tempInt))
                                                     End Function))

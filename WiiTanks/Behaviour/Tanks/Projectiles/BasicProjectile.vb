@@ -66,10 +66,10 @@
                 Dim BottomLeft As Point = New Point(wall.rect.Location.X, wall.rect.Location.Y + wall.rect.Height)
                 Dim BottomRight As Point = New Point(wall.rect.Location.X + wall.rect.Width, wall.rect.Location.Y + wall.rect.Height)
 
-                Dim disTL As Decimal = Math.Sqrt((newCentre.X - TopLeft.X) ^ 2 + (newCentre.Y - TopLeft.Y) ^ 2)
-                Dim disTR As Decimal = Math.Sqrt((newCentre.X - TopRight.X) ^ 2 + (newCentre.Y - TopRight.Y) ^ 2)
-                Dim disBL As Decimal = Math.Sqrt((newCentre.X - BottomLeft.X) ^ 2 + (newCentre.Y - BottomLeft.Y) ^ 2)
-                Dim disBR As Decimal = Math.Sqrt((newCentre.X - BottomRight.X) ^ 2 + (newCentre.Y - BottomRight.Y) ^ 2)
+                Dim disTL As Decimal = Math.Sqrt((colliSionPoint.X - TopLeft.X) ^ 2 + (colliSionPoint.Y - TopLeft.Y) ^ 2)
+                Dim disTR As Decimal = Math.Sqrt((colliSionPoint.X - TopRight.X) ^ 2 + (colliSionPoint.Y - TopRight.Y) ^ 2)
+                Dim disBL As Decimal = Math.Sqrt((colliSionPoint.X - BottomLeft.X) ^ 2 + (colliSionPoint.Y - BottomLeft.Y) ^ 2)
+                Dim disBR As Decimal = Math.Sqrt((colliSionPoint.X - BottomRight.X) ^ 2 + (colliSionPoint.Y - BottomRight.Y) ^ 2)
 
                 If Not (disTL = disBR And disTR = disBL) Then
                     If disTL < disBR Then

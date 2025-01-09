@@ -35,6 +35,8 @@ Public Class GameState
         Select Case type
             Case GameMapTiles.BROWN_SPAWN
                 enemytank = New Brown(location)
+            Case GameMapTiles.GREEN_SPAWN
+                enemytank = New Brown(location)
             Case Else
                 enemytank = New Player(location)
         End Select
@@ -196,6 +198,13 @@ Public Class GameState
             graphics.DrawImage(wall.Image, wall.Location)
         Next
 
+        'For y As Integer = 0 To 20
+        '    graphics.DrawLine(New Pen(Color.Green), New Point(0, y * SharedResources.TileSize.Height), New Point(SharedResources.WindowSize.Width, y * SharedResources.TileSize.Height))
+        'Next
+        '
+        'For x As Integer = 0 To 20
+        '    graphics.DrawLine(New Pen(Color.Green), New Point(x * SharedResources.TileSize.Width, 0), New Point(x * SharedResources.TileSize.Width, SharedResources.WindowSize.Height))
+        'Next
     End Sub
 
     Public Overrides Sub Click()

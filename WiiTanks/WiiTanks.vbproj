@@ -161,6 +161,8 @@
     <Content Include="Assets\Tanks\BlankTankBase.png" />
     <None Include="Assets\Tanks\BrownTankBase.png" />
     <None Include="Assets\Tanks\BrownTankTurret.png" />
+    <None Include="Assets\Tanks\GreenTankBase.png" />
+    <None Include="Assets\Tanks\GreenTankTurret.png" />
     <Content Include="drawioFiles\exist.txt" />
     <None Include="Assets\Walls\DestroyableWall.png" />
     <None Include="Assets\Walls\BasicWall.png" />

@@ -22,6 +22,7 @@ Public Class Game
 
     Private Sub setupVariables(window As GameWindow)
         _window = window
+        SharedResources.window = window
 
         ReDim Preserve SharedResources.inputKeys(0)
         SharedResources.LastKnownMouseCoords = New Point(0, 0)
