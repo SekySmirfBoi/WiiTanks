@@ -5,7 +5,6 @@ Public Class GameState
 
     Private _levelNum As Integer
     Private _level As Level
-    Private _uiManager As UIManager
     Private _gameMap(,) As String
 
     Private _wallCount As Integer = 0
@@ -13,6 +12,7 @@ Public Class GameState
     Private threads As New List(Of Thread)
 
     Sub New(Level As Integer)
+        SharedResources.gameEnded = False
         _levelNum = Level
         ReDim SharedResources.playerTanks(0)
     End Sub
@@ -70,9 +70,6 @@ Public Class GameState
     End Sub
 
     Public Overrides Sub Create()
-
-        _uiManager = New UIManager
-
         SharedResources.finishedLoadingMap = True
 
         Select Case _levelNum
@@ -127,52 +124,24 @@ Public Class GameState
         SharedResources.finishedLoadingMap = True
     End Sub
 
-    Private Sub createThread(func As ThreadStart)
-        Dim curthread As New Thread(func)
-        curthread.Start()
-        threads.Add(curthread)
-    End Sub
-
-    Private Sub WaitForThreads()
-        Dim running As Boolean = True
-
-        While running
-            running = False
-            Dim deadThreads As New List(Of Thread)
-            For Each thr As Thread In threads
-                If thr.IsAlive() Then
-                    running = True
-                Else
-                    deadThreads.Add(thr)
-                End If
-            Next
-
-            For Each thr As Thread In deadThreads
-                threads.Remove(thr)
-            Next
-        End While
-
-        Return
-    End Sub
-
     Public Overrides Sub Tick()
         If SharedResources.playerTanksCount > 0 Then
             For Each pTank As Player In SharedResources.playerTanks
-                createThread(New ThreadStart(AddressOf pTank.Tick))
+                SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
                 'pTank.Tick()
             Next
         End If
 
         If SharedResources.enemyTanksCount > 0 Then
             For Each eTank As Bae In SharedResources.enemyTanks
-                createThread(New ThreadStart(AddressOf eTank.Tick))
+                SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
                 'eTank.Tick()
             Next
         End If
 
         If SharedResources.projectileCount > 0 Then
             For Each proj As BasicProjectile In SharedResources.projectiles
-                createThread(New ThreadStart(AddressOf proj.Tick))
+                SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
                 'proj.Tick()
             Next
         End If
@@ -183,7 +152,15 @@ Public Class GameState
             End If
         End If
 
-        WaitForThreads()
+        SharedResources.WaitForThreads()
+
+        If SharedResources.gameEnded Then
+            If SharedResources.playerTanksCount > 0 Then
+                SharedResources.stateManager.ChangeState(New GameWinState(_levelNum))
+            Else
+                SharedResources.stateManager.ChangeState(New GameLossState(_levelNum))
+            End If
+        End If
     End Sub
 
     Public Overrides Sub Render(graphics As Graphics)
@@ -206,26 +183,6 @@ Public Class GameState
         If SharedResources.enemyTanksCount > 0 Then
             For Each eTank As Bae In SharedResources.enemyTanks
                 graphics.DrawImage(eTank.Image(), eTank.Location)
-
-                For i As Integer = 0 To 1
-                    Dim lenght As Integer = 100
-
-                    Dim x1 As Integer = eTank.CentreCood.X
-                    Dim y1 As Integer = eTank.CentreCood.Y
-
-                    Dim theta As Integer = If(i = 0, eTank.p_AI.p_turretAngle, eTank.p_AI.p_target)
-                    Dim phi As Integer = (180 - theta) / 2
-
-                    Dim thetaRad As Decimal = theta * (Math.PI / 180)
-                    Dim phiRad As Decimal = phi * (Math.PI / 180)
-
-                    Dim a As Decimal = Math.Sqrt((2 * lenght ^ 2) - (2 * lenght ^ 2) * Math.Cos(thetaRad))
-                    Dim o As Decimal = a * Math.Sin((Math.PI / 2) - phiRad)
-                    Dim n As Decimal = a * Math.Cos((Math.PI / 2) - phiRad)
-
-
-                    'graphics.DrawLine(New Pen(Color.Red, 2), eTank.CentreCood, New Point(x1 + n, y1 - lenght + o))
-                Next
             Next
         End If
 

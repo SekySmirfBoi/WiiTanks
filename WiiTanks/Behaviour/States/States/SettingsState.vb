@@ -1,15 +1,12 @@
 ﻿Public Class SettingsState
     Inherits State
     Public Overrides Sub Create()
-        p_uiManager = New UIManager()
-
-
-
-        p_uiManager.AddComponent(New Button(New Point(SharedResources.CentreWindowCoord.X - 60, 150), "test", SharedResources.BtnSize,
+        Dim numOfBtns As Integer = 2
+        p_uiManager.AddComponent(New Button(SharedResources.CalculateBtnPos(1, numOfBtns), "test", SharedResources.BtnSize,
                                             Function() As Boolean
                                                 MsgBox("hey it wokrs")
                                             End Function))
-        p_uiManager.AddComponent(New Button(New Point(SharedResources.CentreWindowCoord.X - 60, 20), "Back", SharedResources.BtnSize,
+        p_uiManager.AddComponent(New Button(SharedResources.CalculateBtnPos(2, numOfBtns), "Back", SharedResources.BtnSize,
                                             Function() As Boolean
                                                 SharedResources.stateManager.ChangeState(New MenuState())
                                             End Function))

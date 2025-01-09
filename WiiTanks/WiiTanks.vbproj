@@ -89,6 +89,8 @@
     <Compile Include="Behaviour\SharedResources.vb" />
     <Compile Include="Behaviour\States\State.vb" />
     <Compile Include="Behaviour\States\StateManager.vb" />
+    <Compile Include="Behaviour\States\States\GameWinState.vb" />
+    <Compile Include="Behaviour\States\States\GameLossState.vb" />
     <Compile Include="Behaviour\States\States\GameState.vb" />
     <Compile Include="Behaviour\States\States\LevelSelectState.vb" />
     <Compile Include="Behaviour\States\States\MenuState.vb" />
@@ -99,8 +101,10 @@
     <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BaseAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BorwnAI.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\AI\GreenAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\PlayerAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\Brown.vb" />
+    <Compile Include="Behaviour\Tanks\Enemy\Green.vb" />
     <Compile Include="Behaviour\Tanks\Player\InputKey.vb" />
     <Compile Include="Behaviour\Tanks\Player\Player.vb" />
     <Compile Include="Behaviour\Tanks\Projectiles\BasicProjectile.vb" />
