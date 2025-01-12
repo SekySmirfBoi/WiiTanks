@@ -13,7 +13,7 @@ Public Class Game
     Private _walls() As BasicWall
 
     Sub New(window As GameWindow)
-        SharedResources.stateManager = New StateManager(New LevelSelectState)
+        SharedResources.stateManager = New StateManager(New GameState(17))
         setupVariables(window)
     End Sub
 

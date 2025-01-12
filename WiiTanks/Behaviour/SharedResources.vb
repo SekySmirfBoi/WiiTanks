@@ -5,8 +5,8 @@ Public Class SharedResources
 
     Public Shared RNG As New Random
     Public Shared TileSize As Size = New Size(55, 55)
-    Public Shared MapSize As Size = New Size(20, 15)
-    Public Shared NumberOfLevels As Integer = 2
+    Public Shared MapSize As Size = New Size(16, 14)
+    Public Shared NumberOfLevels As Integer = 17
 
     Public Shared window As Form
     Public Shared WindowSize As Size = New Size(TileSize.Width * (MapSize.Width + 2) + 16, TileSize.Height * (MapSize.Height + 2) + 39)

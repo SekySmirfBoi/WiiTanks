@@ -84,6 +84,8 @@
     <Compile Include="Behaviour\GraphicsHandler.vb" />
     <Compile Include="Behaviour\Levels\Level.vb" />
     <Compile Include="Behaviour\Levels\Level1.vb" />
+    <Compile Include="Behaviour\Levels\Level17.vb" />
+    <Compile Include="Behaviour\Levels\Level2.vb" />
     <Compile Include="Behaviour\Objects\Walls\BasicWall.vb" />
     <Compile Include="Behaviour\Objects\Walls\DestroyableWall.vb" />
     <Compile Include="Behaviour\SharedResources.vb" />
