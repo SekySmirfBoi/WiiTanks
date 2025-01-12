@@ -72,6 +72,8 @@ Public Class GameState
     End Sub
 
     Public Overrides Sub Create()
+        SharedResources.DeleteAll()
+
         SharedResources.finishedLoadingMap = True
 
         Select Case _levelNum
