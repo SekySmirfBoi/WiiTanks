@@ -12,7 +12,8 @@
 
     Sub New(window As GameWindow)
         SharedResources.window = window
-        SharedResources.stateManager = New StateManager(New GameState(1))
+        SharedResources.stateManager = New StateManager(New LevelDesignerState)
+        'SharedResources.stateManager = New StateManager(New GameState(1))
         setupVariables(window)
     End Sub
 

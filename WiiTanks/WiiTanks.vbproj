@@ -114,6 +114,7 @@
     <Compile Include="Behaviour\Tanks\Projectiles\ProjectileTypes.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
     <Compile Include="Behaviour\UI\Components\TextBlock.vb" />
+    <Compile Include="Behaviour\UI\Components\TextBox.vb" />
     <Compile Include="Behaviour\UI\UIComponent.vb" />
     <Compile Include="Behaviour\UI\UIManager.vb" />
     <Compile Include="GameWindow.vb">

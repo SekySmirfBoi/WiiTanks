@@ -9,8 +9,8 @@ Public Class SharedResources
     Public Shared NumberOfLevels As Integer = 17
 
     Public Shared window As Form
-    'Public Shared WindowSize As Size = New Size(TileSize.Width * (MapSize.Width + 2) + 16, TileSize.Height * (MapSize.Height + 2) + 39)
-    Public Shared WindowSize As Size = New Size(400, 400)
+    Public Shared WindowSize As Size = New Size(TileSize.Width * (MapSize.Width + 2) + 16, TileSize.Height * (MapSize.Height + 2) + 39)
+    'Public Shared WindowSize As Size = New Size(400, 400)
     Public Shared CentreWindowCoord As Point = New Point(WindowSize.Width / 2, WindowSize.Height / 2)
     Public Shared TextBrush As Pen = New Pen(Color.Black, 1)
     Public Shared BlankImage As Image = New Bitmap(1, 1)
