@@ -3,14 +3,15 @@
 Public Class GameLossState
     Inherits State
 
-    Private _level As Integer
+    Private _level As String
 
-    Public Sub New(level As Integer)
+    Public Sub New(level As String)
         MyBase.New()
         _level = level
     End Sub
 
     Public Overrides Sub Create()
+        SharedResources.window.Size = SharedResources.WindowSize
         p_uiManager.AddComponent(New Button(SharedResources.CentreWindowCoord + New Point(-60, 0), "Try Again!", SharedResources.BtnSize,
                                             Function() As Boolean
                                                 SharedResources.DeleteAll()

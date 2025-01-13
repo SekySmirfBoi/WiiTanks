@@ -1,7 +1,7 @@
 ﻿Public Class Level1
     Inherits Level
     Public Overrides Function Create()
-        Dim gameMap(20, 15) As String
+        Dim gameMap(19, 14) As String
         gameMap(10, 10) = GameMapTiles.PLAYER_SPAWN
 
         For x As Integer = 3 To SharedResources.MapSize.Width

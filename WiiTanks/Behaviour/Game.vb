@@ -1,6 +1,4 @@
-﻿Imports System.Windows.Forms.VisualStyles
-
-Public Class Game
+﻿Public Class Game
 
     Private WithEvents _window As GameWindow
     Private WithEvents _timer As Timer
@@ -13,7 +11,8 @@ Public Class Game
     Private _walls() As BasicWall
 
     Sub New(window As GameWindow)
-        SharedResources.stateManager = New StateManager(New GameState(17))
+        SharedResources.window = window
+        SharedResources.stateManager = New StateManager(New GameState(1))
         setupVariables(window)
     End Sub
 
@@ -22,7 +21,6 @@ Public Class Game
 
     Private Sub setupVariables(window As GameWindow)
         _window = window
-        SharedResources.window = window
 
         ReDim Preserve SharedResources.inputKeys(0)
         SharedResources.LastKnownMouseCoords = New Point(0, 0)

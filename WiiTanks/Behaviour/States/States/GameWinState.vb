@@ -3,14 +3,15 @@
 Public Class GameWinState
     Inherits State
 
-    Private _level As Integer
+    Private _level As String
 
-    Public Sub New(level As Integer)
+    Public Sub New(level As String)
         MyBase.New()
         _level = level
     End Sub
 
     Public Overrides Sub Create()
+        SharedResources.window.Size = SharedResources.WindowSize
         Dim numOfButtons As Integer = 2
         Dim offset As Integer = -1
 

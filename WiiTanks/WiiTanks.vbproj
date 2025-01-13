@@ -94,6 +94,7 @@
     <Compile Include="Behaviour\States\States\GameWinState.vb" />
     <Compile Include="Behaviour\States\States\GameLossState.vb" />
     <Compile Include="Behaviour\States\States\GameState.vb" />
+    <Compile Include="Behaviour\States\States\LevelDesignerState.vb" />
     <Compile Include="Behaviour\States\States\LevelSelectState.vb" />
     <Compile Include="Behaviour\States\States\MenuState.vb" />
     <Compile Include="Behaviour\States\States\SettingsState.vb" />
@@ -165,6 +166,7 @@
     <None Include="Assets\Tanks\BrownTankTurret.png" />
     <None Include="Assets\Tanks\GreenTankBase.png" />
     <None Include="Assets\Tanks\GreenTankTurret.png" />
+    <Content Include="Behaviour\Levels\Level1.txt" />
     <Content Include="drawioFiles\exist.txt" />
     <None Include="Assets\Walls\DestroyableWall.png" />
     <None Include="Assets\Walls\BasicWall.png" />

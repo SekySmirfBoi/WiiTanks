@@ -169,5 +169,27 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,BT,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,W,W,W,W,W,W,W,W,W,W,W,W,W
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,BT,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,PT,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
+        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b.
+        '''</summary>
+        Friend ReadOnly Property Level1() As String
+            Get
+                Return ResourceManager.GetString("Level1", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

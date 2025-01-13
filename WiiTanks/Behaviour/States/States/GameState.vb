@@ -3,7 +3,7 @@
 Public Class GameState
     Inherits State
 
-    Private _levelNum As Integer
+    Private _levelNum As String
     Private _level As Level
     Private _gameMap(,) As String
 
@@ -11,7 +11,7 @@ Public Class GameState
 
     Private threads As New List(Of Thread)
 
-    Sub New(Level As Integer)
+    Sub New(Level As String)
         SharedResources.gameEnded = False
         _levelNum = Level
         ReDim SharedResources.playerTanks(0)
@@ -71,24 +71,49 @@ Public Class GameState
         Next
     End Sub
 
+    Private Sub CreateMapArray()
+        Dim lines() As String
+
+        Select Case _levelNum
+            Case "1"
+                lines = My.Resources.Level1.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+            Case Else
+                lines = My.Resources.Level1.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+        End Select
+
+        ReDim _gameMap(19, 14)
+
+        Dim x As Integer = 0
+        Dim y As Integer = 0
+        For Each line As String In lines
+            For Each token As String In line.Split(",")
+                _gameMap(x, y) = token
+                x += 1
+            Next
+            x = 0
+            y += 1
+        Next
+
+    End Sub
+
     Public Overrides Sub Create()
+        SharedResources.window.Size = SharedResources.WindowSize
         SharedResources.DeleteAll()
 
         SharedResources.finishedLoadingMap = True
 
         Select Case _levelNum
-            Case 1
-                _level = New Level1
-            Case 2
+            Case "2"
                 _level = New Level2
-
-            Case 17
+            Case "17"
                 _level = New Level17
             Case Else
-                MsgBox(_levelNum)
+                _levelNum = "1"
+                _level = New Level1
         End Select
 
-        _gameMap = _level.Create()
+        CreateMapArray()
+        '_gameMap = _level.Create()
         CreateMapBorder()
 
 
@@ -205,6 +230,8 @@ Public Class GameState
             graphics.DrawImage(wall.Image, wall.Location)
         Next
 
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
         For y As Integer = 0 To 20
             graphics.DrawLine(New Pen(Color.Green), New Point(0, y * SharedResources.TileSize.Height), New Point(SharedResources.WindowSize.Width, y * SharedResources.TileSize.Height))
         Next
@@ -212,6 +239,8 @@ Public Class GameState
         For x As Integer = 0 To 20
             graphics.DrawLine(New Pen(Color.Green), New Point(x * SharedResources.TileSize.Width, 0), New Point(x * SharedResources.TileSize.Width, SharedResources.WindowSize.Height))
         Next
+
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     End Sub
 
     Public Overrides Sub Click()

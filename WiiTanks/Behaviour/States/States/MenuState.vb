@@ -2,6 +2,7 @@
     Inherits State
 
     Public Overrides Sub Create()
+        SharedResources.window.Size = SharedResources.WindowSize
 
         ' Backround needs making
 
