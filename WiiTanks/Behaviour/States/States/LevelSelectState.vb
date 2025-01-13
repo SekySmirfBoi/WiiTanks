@@ -37,10 +37,6 @@
     Public Overrides Sub Tick()
     End Sub
 
-    Public Overrides Sub Render(graphics As Graphics)
-        p_uiManager.Render(graphics)
-    End Sub
-
     Public Overrides Sub Click()
         p_uiManager.Click()
     End Sub

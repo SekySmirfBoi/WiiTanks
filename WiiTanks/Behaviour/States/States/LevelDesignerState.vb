@@ -1,6 +1,8 @@
 ﻿Public Class LevelDesignerState
     Inherits State
 
+    Private _selectedComp As UIComponent
+
     Public Overrides Sub Create()
         SharedResources.window.Size = SharedResources.WindowSize + New Size(400, 0)
 
@@ -14,9 +16,7 @@
     Public Overrides Sub Tick()
     End Sub
 
-    Public Overrides Sub Render(graphics As Graphics)
-    End Sub
-
     Public Overrides Sub Click()
+
     End Sub
 End Class

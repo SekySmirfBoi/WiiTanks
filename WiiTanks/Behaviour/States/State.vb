@@ -8,6 +8,8 @@
 
     Public MustOverride Sub Create()
     Public MustOverride Sub Tick()
-    Public MustOverride Sub Render(graphics As Graphics)
+    Public Overridable Sub Render(graphics As Graphics)
+        p_uiManager.Render(graphics)
+    End Sub
     Public MustOverride Sub Click()
 End Class

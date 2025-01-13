@@ -100,7 +100,7 @@ Public Class GameWinState
         Next
 
 
-        p_uiManager.Render(graphics)
+        MyBase.Render(graphics)
     End Sub
 
     Public Overrides Sub Click()
