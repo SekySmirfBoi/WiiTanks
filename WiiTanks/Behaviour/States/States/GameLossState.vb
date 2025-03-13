@@ -7,11 +7,12 @@ Public Class GameLossState
 
     Public Sub New(level As String)
         MyBase.New()
+
         _level = level
     End Sub
 
     Public Overrides Sub Create()
-        SharedResources.window.Size = SharedResources.WindowSize
+        SharedResources.ChantWindowSize(SharedResources.WindowSize)
         p_uiManager.AddComponent(New Button(SharedResources.CentreWindowCoord + New Point(-60, 0), "Try Again!", SharedResources.BtnSize,
                                             Function() As Boolean
                                                 SharedResources.DeleteAll()
@@ -26,26 +27,29 @@ Public Class GameLossState
     End Sub
 
     Public Overrides Sub Tick()
-        If SharedResources.playerTanksCount > 0 Then
-            For Each pTank As Player In SharedResources.playerTanks
-                SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
-                'pTank.Tick()
-            Next
-        End If
+        Try
+            If SharedResources.playerTanksCount > 0 Then
+                For Each pTank As Player In SharedResources.playerTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
+                    'pTank.Tick()
+                Next
+            End If
 
-        If SharedResources.enemyTanksCount > 0 Then
-            For Each eTank As Bae In SharedResources.enemyTanks
-                SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
-                'eTank.Tick()
-            Next
-        End If
+            If SharedResources.enemyTanksCount > 0 Then
+                For Each eTank As Bae In SharedResources.enemyTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
+                    'eTank.Tick()
+                Next
+            End If
 
-        If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
-                SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
-                'proj.Tick()
-            Next
-        End If
+            If SharedResources.projectileCount > 0 Then
+                For Each proj As BasicProjectile In SharedResources.projectilesLs
+                    SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
+                    'proj.Tick()
+                Next
+            End If
+        Catch e As InvalidOperationException
+        End Try
 
         If SharedResources.inputKeys.Count - 1 >= Keys.Escape Then
             If SharedResources.inputKeys(Keys.Escape) Then
@@ -80,7 +84,7 @@ Public Class GameLossState
         End If
 
         If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
+            For Each proj As BasicProjectile In SharedResources.projectilesLs
                 graphics.DrawImage(proj.Image, proj.Location)
             Next
         End If

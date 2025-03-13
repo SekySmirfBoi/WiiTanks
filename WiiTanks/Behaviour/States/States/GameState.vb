@@ -3,18 +3,17 @@
 Public Class GameState
     Inherits State
 
-    Private _levelNum As String
-    Private _level As Level
-    Private _gameMap(,) As String
+    Private _level As String
 
-    Private _wallCount As Integer = 0
+    Private _gameMap(,) As String
 
     Private threads As New List(Of Thread)
 
     Sub New(Level As String)
         SharedResources.gameEnded = False
-        _levelNum = Level
         ReDim SharedResources.playerTanks(0)
+
+        _level = Level
     End Sub
 
     Private Sub CreatePlayer(spawnLocation As Point)
@@ -48,16 +47,16 @@ Public Class GameState
 
     Private Sub CreateWall(Location As Point)
         Dim wall As New BasicWall(Location, SharedResources.TileSize)
-        ReDim Preserve SharedResources.walls(_wallCount)
-        SharedResources.walls(_wallCount) = wall
-        _wallCount += 1
+        ReDim Preserve SharedResources.walls(SharedResources.wallCount)
+        SharedResources.walls(SharedResources.wallCount) = wall
+        SharedResources.wallCount += 1
     End Sub
 
     Private Sub CreateDestroyableWall(Location As Point)
         Dim wall As New DestroyableWall(Location, SharedResources.TileSize)
-        ReDim Preserve SharedResources.walls(_wallCount)
-        SharedResources.walls(_wallCount) = wall
-        _wallCount += 1
+        ReDim Preserve SharedResources.walls(SharedResources.wallCount)
+        SharedResources.walls(SharedResources.wallCount) = wall
+        SharedResources.wallCount += 1
     End Sub
 
     Private Sub CreateMapBorder()
@@ -74,12 +73,7 @@ Public Class GameState
     Private Sub CreateMapArray()
         Dim lines() As String
 
-        Select Case _levelNum
-            Case "1"
-                lines = My.Resources.Level1.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
-            Case Else
-                lines = My.Resources.Level1.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
-        End Select
+        lines = _level.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
 
         ReDim _gameMap(19, 14)
 
@@ -97,20 +91,10 @@ Public Class GameState
     End Sub
 
     Public Overrides Sub Create()
-        SharedResources.window.Size = SharedResources.WindowSize
+        SharedResources.ChantWindowSize(SharedResources.WindowSize)
         SharedResources.DeleteAll()
 
         SharedResources.finishedLoadingMap = True
-
-        Select Case _levelNum
-            Case "2"
-                _level = New Level2
-            Case "17"
-                _level = New Level17
-            Case Else
-                _levelNum = "1"
-                _level = New Level1
-        End Select
 
         CreateMapArray()
         '_gameMap = _level.Create()
@@ -159,40 +143,44 @@ Public Class GameState
     End Sub
 
     Public Overrides Sub Tick()
-        If SharedResources.playerTanksCount > 0 Then
-            For Each pTank As Player In SharedResources.playerTanks
-                SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
-                'pTank.Tick()
-            Next
-        End If
 
-        If SharedResources.enemyTanksCount > 0 Then
-            For Each eTank As Bae In SharedResources.enemyTanks
-                SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
-                'eTank.Tick()
-            Next
-        End If
-
-        If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
-                SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
-                'proj.Tick()
-            Next
-        End If
-
-        If SharedResources.inputKeys.Count - 1 >= Keys.Escape Then
-            If SharedResources.inputKeys(Keys.Escape) Then
-                SharedResources.stateManager.ChangeState(New LevelSelectState())
+        Try
+            If SharedResources.playerTanksCount > 0 Then
+                For Each pTank As Player In SharedResources.playerTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
+                    'pTank.Tick()
+                Next
             End If
-        End If
+
+            If SharedResources.enemyTanksCount > 0 Then
+                For Each eTank As Bae In SharedResources.enemyTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
+                    'eTank.Tick()
+                Next
+            End If
+
+            If SharedResources.projectileCount > 0 Then
+                For Each proj As BasicProjectile In SharedResources.projectilesLs
+                    SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
+                    'proj.Tick()
+                Next
+            End If
+
+            If SharedResources.inputKeys.Count - 1 >= Keys.Escape Then
+                If SharedResources.inputKeys(Keys.Escape) Then
+                    SharedResources.stateManager.ChangeState(New LevelSelectState())
+                End If
+            End If
+        Catch e As InvalidOperationException
+        End Try
 
         SharedResources.WaitForThreads()
 
         If SharedResources.gameEnded Then
             If SharedResources.playerTanksCount > 0 Then
-                SharedResources.stateManager.ChangeState(New GameWinState(_levelNum))
+                SharedResources.stateManager.ChangeState(New GameWinState(_level))
             Else
-                SharedResources.stateManager.ChangeState(New GameLossState(_levelNum))
+                SharedResources.stateManager.ChangeState(New GameLossState(_level))
             End If
         End If
     End Sub
@@ -201,13 +189,13 @@ Public Class GameState
         If SharedResources.playerTanksCount > 0 Then
             For Each pTank As Player In SharedResources.playerTanks
                 graphics.DrawImage(pTank.Image, pTank.Location)
-                graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
+                'graphics.DrawRectangle(New Pen(Color.Blue, 3), New Rectangle(pTank.Location, pTank.Size))
 
-                If SharedResources.inputKeys.Length - 1 >= Keys.P Then
-                    If SharedResources.inputKeys(Keys.P) Then
-                        graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
-                    End If
-                End If
+                'If SharedResources.inputKeys.Length - 1 >= Keys.P Then
+                '    If SharedResources.inputKeys(Keys.P) Then
+                '        graphics.DrawRectangle(New Pen(Color.Red, 3), pTank.collBox)
+                '    End If
+                'End If
 
                 'graphics.DrawString("X:" & pTank.Location.X, SharedResources.DEFAULT_FONT, SharedResources.TextBrush.Brush, New Point(800, 200))
                 'graphics.DrawString("Y:" & pTank.Location.Y, SharedResources.DEFAULT_FONT, SharedResources.TextBrush.Brush, New Point(800, 250))
@@ -221,14 +209,16 @@ Public Class GameState
         End If
 
         If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
+            For Each proj As BasicProjectile In SharedResources.projectilesLs
                 graphics.DrawImage(proj.Image, proj.Location)
             Next
         End If
 
-        For Each wall As BasicWall In SharedResources.walls
-            graphics.DrawImage(wall.Image, wall.Location)
-        Next
+        If SharedResources.wallCount > 0 Then
+            For Each wall As BasicWall In SharedResources.walls
+                graphics.DrawImage(wall.Image, wall.Location)
+            Next
+        End If
 
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 

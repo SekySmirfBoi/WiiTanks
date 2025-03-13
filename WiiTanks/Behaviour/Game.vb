@@ -12,8 +12,9 @@
 
     Sub New(window As GameWindow)
         SharedResources.window = window
-        SharedResources.stateManager = New StateManager(New LevelDesignerState)
-        'SharedResources.stateManager = New StateManager(New GameState(1))
+        'SharedResources.stateManager = New StateManager(New LevelDesignerState)
+        'SharedResources.stateManager = New StateManager(New MenuState)
+        SharedResources.stateManager = New StateManager(New GameState(My.Resources.Level1))
         setupVariables(window)
     End Sub
 
@@ -56,12 +57,19 @@
         End If
         SharedResources.inputKeys(e.KeyCode) = False
     End Sub
+    Public Sub KeyPress_Event(sender As GameWindow, e As KeyPressEventArgs) Handles _window.KeyPress
+        SharedResources.stateManager.KeyPress(e.KeyChar)
+    End Sub
 
     Public Sub MouseMove_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.MouseMove
         SharedResources.LastKnownMouseCoords = New Point(e.X, e.Y)
     End Sub
 
     Public Sub MouseClick_Event(sender As GameWindow, e As MouseEventArgs) Handles _window.Click
-        SharedResources.stateManager.Click()
+        If e.Button = MouseButtons.Left Then
+            SharedResources.stateManager.Click()
+        ElseIf e.Button = MouseButtons.Right Then
+            SharedResources.stateManager.RightClick()
+        End If
     End Sub
 End Class

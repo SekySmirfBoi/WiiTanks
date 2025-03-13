@@ -19,4 +19,8 @@
 
         Me.Text = "Wii Tonks"
     End Sub
+
+    Public Sub centre()
+        Me.CenterToScreen()
+    End Sub
 End Class

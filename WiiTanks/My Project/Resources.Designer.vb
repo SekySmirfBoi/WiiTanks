@@ -141,6 +141,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BRWON_SPAWN,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,GREEN_SPAWN,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLA [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property debug() As String
+            Get
+                Return ResourceManager.GetString("debug", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property DestroyableWall() As System.Drawing.Bitmap
@@ -171,24 +185,29 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,BT,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,W,W,W,W,W,W,W,W,W,W,W,W,W
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,BT,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,PT,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b
-        '''b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b.
+        '''  Looks up a localized string similar to BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BRWON_SPAWN,BLANK,BLANK,GREEN_SPAWN,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLA [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Level1() As String
             Get
                 Return ResourceManager.GetString("Level1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to BLANK,BLANK,BLANK,BLANK,BLANK,WALL,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,WALL,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,GREEN_SPAWN,BLANK,BLANK,WALL,BLANK,BLANK,BLANK,WALL,BLANK,BLANK,BLANK,BLANK,GREEN_SPAWN,BLANK
+        '''BLANK,BLANK,BLANK,BLANK,BLANK,DESTRPYABLEWALL,BLANK,BLANK,BLANK,DESTRPYABLEWALL,BLANK,BLANK,BLANK,BLANK,BLANK,BLANK
+        '''BLANK,BLANK,BLANK,WALL,DESTRPYABLEWALL,DESTRPYABLEWALL,BLANK,BLANK,BLANK,DESTRPYABLEWALL,DESTRPY [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Level17() As String
+            Get
+                Return ResourceManager.GetString("Level17", resourceCulture)
             End Get
         End Property
     End Module

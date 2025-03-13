@@ -36,4 +36,29 @@
             CheckCircleInLine(circleCentre, radius, TopLeft, BottomLeft, 5) Or
             CheckCircleInLine(circleCentre, radius, TopRight, BottomRight, 5)
     End Function
+
+    Public Shared Function willPathIntersectWithRect(loc As Point, iComp As Decimal, jComp As Decimal, rect As Rectangle)
+        Dim TopLeft As Point = New Point(rect.Location.X, rect.Location.Y)
+        Dim TopRight As Point = New Point(rect.Location.X + rect.Width, rect.Location.Y)
+        Dim BottomLeft As Point = New Point(rect.Location.X, rect.Location.Y + rect.Height)
+        Dim BottomRight As Point = New Point(rect.Location.X + rect.Width, rect.Location.Y + rect.Height)
+
+        Dim startx As Decimal
+
+        Dim firstAngle As Decimal = Math.Acos(((TopLeft.X - loc.X) * (BottomRight.X - loc.X) + (TopLeft.Y - loc.Y) * (BottomRight.Y - loc.Y) /
+                                              (Math.Sqrt((TopLeft.X - loc.X) ^ 2 + (TopLeft.Y - loc.Y) ^ 2) * Math.Sqrt((BottomRight.X - loc.X) ^ 2 + (BottomRight.Y - loc.Y) ^ 2))))
+        Dim secondAngle As Decimal = Math.Acos(((TopLeft.X - loc.X) * (iComp) + (TopLeft.Y - loc.Y) * (jComp) /
+                                              (Math.Sqrt((TopLeft.X - loc.X) ^ 2 + (TopLeft.Y - loc.Y) ^ 2) * Math.Sqrt((iComp) ^ 2 + (jComp) ^ 2))))
+
+        If firstAngle > secondAngle Then
+            Return True
+        End If
+
+        Dim firstAngle2 As Decimal = Math.Acos(((TopRight.X - loc.X) * (BottomLeft.X - loc.X) + (TopRight.Y - loc.Y) * (BottomLeft.Y - loc.Y) /
+                                      (Math.Sqrt((TopRight.X - loc.X) ^ 2 + (TopRight.Y - loc.Y) ^ 2) * Math.Sqrt((BottomLeft.X - loc.X) ^ 2 + (BottomLeft.Y - loc.Y) ^ 2))))
+        Dim secondAngle2 As Decimal = Math.Acos(((TopRight.X - loc.X) * (iComp) + (TopRight.Y - loc.Y) * (jComp) /
+                                              (Math.Sqrt((TopRight.X - loc.X) ^ 2 + (TopRight.Y - loc.Y) ^ 2) * Math.Sqrt((iComp) ^ 2 + (jComp) ^ 2))))
+
+        Return firstAngle2 > secondAngle2
+    End Function
 End Class

@@ -11,17 +11,19 @@ Public Class GameWinState
     End Sub
 
     Public Overrides Sub Create()
-        SharedResources.window.Size = SharedResources.WindowSize
+        SharedResources.ChantWindowSize(SharedResources.WindowSize)
         Dim numOfButtons As Integer = 2
         Dim offset As Integer = -1
 
-        If SharedResources.NumberOfLevels <> _level Then
+        SharedResources.levelUnlocked += 1
+
+        If SharedResources.NumberOfLevels >= SharedResources.levelUnlocked Then
             numOfButtons += 1
             offset = 0
             p_uiManager.AddComponent(New Button(SharedResources.CalculateBtnPos(1, numOfButtons), "Next level", SharedResources.BtnSize,
                                             Function() As Boolean
                                                 SharedResources.DeleteAll()
-                                                SharedResources.stateManager.ChangeState(New GameState(_level + 1))
+                                                SharedResources.stateManager.ChangeState(New GameState(SharedResources.levelUnlocked))
                                             End Function))
         End If
 
@@ -39,26 +41,29 @@ Public Class GameWinState
     End Sub
 
     Public Overrides Sub Tick()
-        If SharedResources.playerTanksCount > 0 Then
-            For Each pTank As Player In SharedResources.playerTanks
-                SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
-                'pTank.Tick()
-            Next
-        End If
+        Try
+            If SharedResources.playerTanksCount > 0 Then
+                For Each pTank As Player In SharedResources.playerTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf pTank.Tick))
+                    'pTank.Tick()
+                Next
+            End If
 
-        If SharedResources.enemyTanksCount > 0 Then
-            For Each eTank As Bae In SharedResources.enemyTanks
-                SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
-                'eTank.Tick()
-            Next
-        End If
+            If SharedResources.enemyTanksCount > 0 Then
+                For Each eTank As Bae In SharedResources.enemyTanks
+                    SharedResources.createThread(New ThreadStart(AddressOf eTank.Tick))
+                    'eTank.Tick()
+                Next
+            End If
 
-        If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
-                SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
-                'proj.Tick()
-            Next
-        End If
+            If SharedResources.projectileCount > 0 Then
+                For Each proj As BasicProjectile In SharedResources.projectilesLs
+                    SharedResources.createThread(New ThreadStart(AddressOf proj.Tick))
+                    'proj.Tick()
+                Next
+            End If
+        Catch e As InvalidOperationException
+        End Try
 
         If SharedResources.inputKeys.Count - 1 >= Keys.Escape Then
             If SharedResources.inputKeys(Keys.Escape) Then
@@ -90,7 +95,7 @@ Public Class GameWinState
         End If
 
         If SharedResources.projectileCount > 0 Then
-            For Each proj As BasicProjectile In SharedResources.projectiles
+            For Each proj As BasicProjectile In SharedResources.projectilesLs
                 graphics.DrawImage(proj.Image, proj.Location)
             Next
         End If

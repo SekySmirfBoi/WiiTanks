@@ -8,7 +8,7 @@ Public Class SharedResources
     Public Shared MapSize As Size = New Size(16, 14)
     Public Shared NumberOfLevels As Integer = 17
 
-    Public Shared window As Form
+    Public Shared window As GameWindow
     Public Shared WindowSize As Size = New Size(TileSize.Width * (MapSize.Width + 2) + 16, TileSize.Height * (MapSize.Height + 2) + 39)
     'Public Shared WindowSize As Size = New Size(400, 400)
     Public Shared CentreWindowCoord As Point = New Point(WindowSize.Width / 2, WindowSize.Height / 2)
@@ -16,6 +16,8 @@ Public Class SharedResources
     Public Shared BlankImage As Image = New Bitmap(1, 1)
     Public Shared BtnSize As Size = New Size(150, 40)
     Public Shared DEFAULT_FONT As Font = New Font("Ariel", 24)
+    Public Shared TXTBX_FONT As Font = New Font("Ariel", 12)
+    Public Shared EmptyComp As New EmptyComponent()
 
     Public Shared LastKnownMouseCoords As Point = New Point(0, 0)
     Public Shared inputKeys() As Boolean
@@ -23,17 +25,27 @@ Public Class SharedResources
     Public Shared walls() As BasicWall
     Public Shared playerTanks() As Player
     Public Shared projectiles() As BasicProjectile
+    Public Shared projectilesLs As New List(Of BasicProjectile)
     Public Shared enemyTanks() As Bae
+    Public Shared wallCount As Integer = 0
     Public Shared playerTanksCount As Integer = 0
     Public Shared projectileCount As Integer = 0
     Public Shared enemyTanksCount As Integer = 0
 
+    Public Shared levelUnlocked As Integer = 1
+    Public Shared AIEnabled As Boolean = True
     Public Shared finishedLoadingMap As Boolean = False
     Public Shared gameEnded As Boolean = False
 
     Public Shared stateManager As StateManager
     Public Shared threads As New List(Of Thread)
 
+    Public Shared Sub ChantWindowSize(size)
+        window.MinimumSize = size
+        window.MaximumSize = size
+        window.Size = size
+        window.centre()
+    End Sub
 
     Public Shared Function CalculateBtnPos(btnNum As Integer, NumOfBtns As Integer) As Point
         Return CalculateBtnPos(btnNum, NumOfBtns, BtnSize)
@@ -76,12 +88,14 @@ Public Class SharedResources
         projectileCount = 0
         enemyTanksCount = 0
 
+        projectilesLs = New List(Of BasicProjectile)
+
         ReDim playerTanks(0)
         ReDim projectiles(0)
         ReDim enemyTanks(0)
     End Sub
 
-    Public Shared Sub CreateProjectile(Location As Point, angle As Integer, type As String)
+    Public Shared Sub CreateProjectile2(Location As Point, angle As Integer, type As String)
         Dim proj As BasicProjectile
         If type = ProjectileTypes.BASIC Then
             proj = New BasicProjectile(angle, Location, 2 * Math.Sqrt(18), 2)
@@ -93,15 +107,34 @@ Public Class SharedResources
         projectileCount += 1
     End Sub
 
+    Public Shared Sub CreateProjectile(Location As Point, angle As Integer, type As String)
+        Dim proj As BasicProjectile
+        If type = ProjectileTypes.BASIC Then
+            proj = New BasicProjectile(angle, Location, 2 * Math.Sqrt(18), 2)
+        Else
+            proj = New BasicProjectile(angle, Location, Math.Sqrt(18), 2)
+        End If
+
+        projectilesLs.Add(proj)
+        projectileCount += 1
+    End Sub
+
     Public Shared Sub DestroyProjectile(proj As BasicProjectile)
+        If Not gameEnded Then
+            If projectilesLs.Remove(proj) Then
+                projectileCount -= 1
+            End If
+        End If
+    End Sub
+
+    Public Shared Sub DestroyProjectile2(proj As BasicProjectile)
         If Not gameEnded Then
             Dim amountToSfit As Integer = 0
 
-            projectileCount -= 1
-
-            For i As Integer = 0 To projectileCount
+            For i As Integer = 0 To projectileCount - 1
                 If Not projectiles(i).Equals(proj) Then
                     projectiles(i - amountToSfit) = projectiles(i)
+                    projectileCount -= 1
                 Else
                     amountToSfit += 1
                 End If

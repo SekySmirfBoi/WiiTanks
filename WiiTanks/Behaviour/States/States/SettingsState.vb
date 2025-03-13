@@ -1,7 +1,7 @@
 ﻿Public Class SettingsState
     Inherits State
     Public Overrides Sub Create()
-        SharedResources.window.Size = SharedResources.WindowSize
+        SharedResources.ChantWindowSize(SharedResources.WindowSize)
         Dim numOfBtns As Integer = 2
         p_uiManager.AddComponent(New Button(SharedResources.CalculateBtnPos(1, numOfBtns), "test", SharedResources.BtnSize,
                                             Function() As Boolean

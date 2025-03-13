@@ -1,4 +1,6 @@
-﻿Public MustInherit Class State
+﻿Imports System.IO
+
+Public MustInherit Class State
 
     Protected p_uiManager As UIManager
 
@@ -12,4 +14,10 @@
         p_uiManager.Render(graphics)
     End Sub
     Public MustOverride Sub Click()
+
+    Public Overridable Sub RightClick()
+    End Sub
+
+    Public Overridable Sub KeyPress(key As Char)
+    End Sub
 End Class

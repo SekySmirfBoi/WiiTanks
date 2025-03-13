@@ -82,10 +82,6 @@
     <Compile Include="Behaviour\GameMapTiles.vb" />
     <Compile Include="Behaviour\GameObject.vb" />
     <Compile Include="Behaviour\GraphicsHandler.vb" />
-    <Compile Include="Behaviour\Levels\Level.vb" />
-    <Compile Include="Behaviour\Levels\Level1.vb" />
-    <Compile Include="Behaviour\Levels\Level17.vb" />
-    <Compile Include="Behaviour\Levels\Level2.vb" />
     <Compile Include="Behaviour\Objects\Walls\BasicWall.vb" />
     <Compile Include="Behaviour\Objects\Walls\DestroyableWall.vb" />
     <Compile Include="Behaviour\SharedResources.vb" />
@@ -99,8 +95,6 @@
     <Compile Include="Behaviour\States\States\MenuState.vb" />
     <Compile Include="Behaviour\States\States\SettingsState.vb" />
     <Compile Include="Behaviour\Tanks\Bae.vb" />
-    <Compile Include="Behaviour\Tanks\Collision\Box.vb" />
-    <Compile Include="Behaviour\Tanks\Collision\CollisionOld.vb" />
     <Compile Include="Behaviour\Tanks\Directions.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BaseAI.vb" />
     <Compile Include="Behaviour\Tanks\Enemy\AI\BorwnAI.vb" />
@@ -113,6 +107,8 @@
     <Compile Include="Behaviour\Tanks\Projectiles\BasicProjectile.vb" />
     <Compile Include="Behaviour\Tanks\Projectiles\ProjectileTypes.vb" />
     <Compile Include="Behaviour\UI\Components\Button.vb" />
+    <Compile Include="Behaviour\UI\Components\ClickablePictureBox.vb" />
+    <Compile Include="Behaviour\UI\Components\EmptyComponent.vb" />
     <Compile Include="Behaviour\UI\Components\TextBlock.vb" />
     <Compile Include="Behaviour\UI\Components\TextBox.vb" />
     <Compile Include="Behaviour\UI\UIComponent.vb" />
@@ -167,7 +163,9 @@
     <None Include="Assets\Tanks\BrownTankTurret.png" />
     <None Include="Assets\Tanks\GreenTankBase.png" />
     <None Include="Assets\Tanks\GreenTankTurret.png" />
+    <None Include="Behaviour\Levels\debug.txt" />
     <Content Include="Behaviour\Levels\Level1.txt" />
+    <None Include="Behaviour\Levels\Level17.txt" />
     <Content Include="drawioFiles\exist.txt" />
     <None Include="Assets\Walls\DestroyableWall.png" />
     <None Include="Assets\Walls\BasicWall.png" />

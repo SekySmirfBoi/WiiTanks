@@ -22,4 +22,12 @@
     Public Sub Click()
         _CurrentState.Click()
     End Sub
+
+    Public Sub RightClick()
+        _CurrentState.RightClick()
+    End Sub
+
+    Public Sub KeyPress(key As Char)
+        _CurrentState.KeyPress(key)
+    End Sub
 End Class

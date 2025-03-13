@@ -81,35 +81,37 @@
     End Function
 
     Protected Sub changeTurretAngle()
-        If _timeSinceLastShot >= 5 Then
-            If If(p_turretAngle > p_target, p_turretAngle - p_target, p_target - p_turretAngle) < p_turretTurnSpeed Then
-                p_turretAngle = p_target
-            Else
-                If p_target <= 180 And p_turretAngle <= 180 Then
-                    p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
-                ElseIf p_target <= 180 And p_turretAngle >= 180 Then
-                    If p_turretAngle - p_target > 180 Then
-                        p_turretAngle += p_turretTurnSpeed
-                    Else
-                        p_turretAngle -= p_turretTurnSpeed
+        If SharedResources.AIEnabled Then
+            If _timeSinceLastShot >= 5 Then
+                If If(p_turretAngle > p_target, p_turretAngle - p_target, p_target - p_turretAngle) < p_turretTurnSpeed Then
+                    p_turretAngle = p_target
+                Else
+                    If p_target <= 180 And p_turretAngle <= 180 Then
+                        p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
+                    ElseIf p_target <= 180 And p_turretAngle >= 180 Then
+                        If p_turretAngle - p_target > 180 Then
+                            p_turretAngle += p_turretTurnSpeed
+                        Else
+                            p_turretAngle -= p_turretTurnSpeed
+                        End If
+                    ElseIf p_target >= 180 And p_turretAngle <= 180 Then
+                        If p_target - p_turretAngle > 180 Then
+                            p_turretAngle -= p_turretTurnSpeed
+                        Else
+                            p_turretAngle += p_turretTurnSpeed
+                        End If
+                    ElseIf p_target >= 180 And p_turretAngle >= 180 Then
+                        p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
                     End If
-                ElseIf p_target >= 180 And p_turretAngle <= 180 Then
-                    If p_target - p_turretAngle > 180 Then
-                        p_turretAngle -= p_turretTurnSpeed
-                    Else
-                        p_turretAngle += p_turretTurnSpeed
-                    End If
-                ElseIf p_target >= 180 And p_turretAngle >= 180 Then
-                    p_turretAngle += If(p_target > p_turretAngle, p_turretTurnSpeed, -p_turretTurnSpeed)
                 End If
-            End If
 
 
-            If p_turretAngle > 360 Then
-                p_turretAngle = 0
-            End If
-            If p_turretAngle < 0 Then
-                p_turretAngle = 360 + p_turretAngle
+                If p_turretAngle > 360 Then
+                    p_turretAngle = 0
+                End If
+                If p_turretAngle < 0 Then
+                    p_turretAngle = 360 + p_turretAngle
+                End If
             End If
         End If
     End Sub

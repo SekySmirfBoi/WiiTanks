@@ -3,27 +3,27 @@
 
     Private _Text As String
     Private _task As Func(Of Boolean)
-    Private _size As Size
     Private _extraData As Integer
 
 
     Sub New(position As Point, text As String, size As Size, task As Func(Of Boolean), Optional extraDAta As Integer = 0)
-        MyBase.New(position)
+        MyBase.New(position, size)
         _Text = text
         _task = task
-        _size = size
         _extraData = extraDAta
     End Sub
 
-    Public Overrides Sub Render(graohics As graphics)
-        graohics.FillRectangle(New Pen(Color.Gray).Brush, New Rectangle(p_loc, _size))
+    Public Overrides Sub Render(graohics As Graphics)
+        graohics.FillRectangle(New Pen(Color.Gray).Brush, New Rectangle(p_loc, p_size))
         graohics.DrawString(_Text, SharedResources.DEFAULT_FONT, New Pen(Color.Black).Brush, p_loc)
     End Sub
 
-    Public Overrides Sub Click(MouseCords As Point)
-        If MouseCords.X >= p_loc.X And MouseCords.X <= p_loc.X + _size.Width And
-                MouseCords.Y >= p_loc.Y And MouseCords.Y <= p_loc.Y + _size.Height Then
-            _task.Invoke
+    Public Overrides Function Click(MouseCords As Point) As Boolean
+        If MyBase.Click(MouseCords) Then
+            _task.Invoke()
+            Return True
+        Else
+            Return False
         End If
-    End Sub
+    End Function
 End Class

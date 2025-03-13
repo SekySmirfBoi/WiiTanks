@@ -1,6 +1,6 @@
 ﻿Public Class BasicProjectile
-    Protected p_velX As Integer
-    Protected p_velY As Integer
+    Protected p_velX As Decimal
+    Protected p_velY As Decimal
     Private _speed As Decimal
     Protected p_angle As Integer
 
@@ -73,18 +73,18 @@
 
                 If Not (disTL = disBR And disTR = disBL) Then
                     If disTL < disBR Then
-                        If disTR < disBL Then
+                        If disTR < disBL And (p_angle > 270 Or p_angle < 90) Then
                             ' Hit top wall
                             p_angle = 540 - p_angle
-                        Else
+                        ElseIf p_angle < 180 And p_angle > 0 Then
                             ' Hit left wall
                             p_angle = 360 - p_angle
                         End If
                     ElseIf disBR < disTL Then
-                        If disTR < disBL Then
+                        If disTR < disBL And p_angle < 360 And p_angle > 180 Then
                             ' Hit right wall
                             p_angle = 360 - p_angle
-                        Else
+                        ElseIf p_angle < 270 And p_angle > 90 Then
                             ' Hit bottom wall
                             p_angle = 540 - p_angle
                         End If
@@ -93,7 +93,7 @@
 
                 If _bounceBuffer <= 0 Then
                     _bouncesLeft -= 1
-                    _bounceBuffer = SharedResources.TickRate / 10
+                    _bounceBuffer = SharedResources.TickRate / 15
                 End If
 
                 If _bouncesLeft < 0 Then

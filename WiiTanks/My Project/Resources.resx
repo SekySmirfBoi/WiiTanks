@@ -142,6 +142,9 @@
   <data name="BrownTankTurret" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Tanks\BrownTankTurret.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Behaviour\Levels\debug.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="DestroyableWall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Walls\DestroyableWall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -153,5 +156,8 @@
   </data>
   <data name="Level1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Behaviour\Levels\Level1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Level17" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Behaviour\Levels\Level17.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
